@@ -3629,24 +3629,21 @@ class C_PiperInterface_V2():
                                           max_range_config:int=70,
                                           teaching_friction:int=1):
         '''
-        夹爪/示教器参数设置指令(基于V1.5-2版本后)
+        グリッパー/ティーチングペンダントのパラメータ設定コマンド（V1.5-2以降のバージョンに基づく）
         
         CAN ID:
             0x47D
         
-        Args:
-            teaching_range_per: 示教器行程系数设置,[100~200]
-            max_range_config: 夹爪/示教器最大控制行程限制值设置,[0,70,100]
-        '''
-        '''
-        Gripper/Teach Pendant Parameter Setting Command (Based on version V1.5-2 and later)
-        
-        CAN ID:
-            0x47D
-        
-        Args:
-            teaching_range_per: Teach pendant travel range coefficient setting, [100~200]
-            max_range_config: Gripper/Teach pendant maximum control travel limit setting, [0,70,100]
+        引数:
+            teaching_range_per (int): ティーチングペンダントの移動量係数設定。つまりリーダフォロワー制御で使う．
+                                      主従アーム構成時にマスターアームの操作量を増幅します。
+                                      範囲: [100~200] (%)
+            max_range_config (int): グリッパー/ティーチングペンダントの最大制御移動量（ストローク）制限値設定。
+                                    使用するグリッパーのサイズに合わせて設定します。
+                                    有効値: [0, 70, 100] (mm)
+            teaching_friction (int): ティーチングペンダントの摩擦係数設定（V1.5-8以降）。
+                                     手動操作時の抵抗感を調整します。
+                                     範囲: [1~10]
         '''
         tx_can = Message()
         gripper_teaching_pendant_param_config = ArmMsgGripperTeachingPendantParamConfig(teaching_range_per, max_range_config,teaching_friction)

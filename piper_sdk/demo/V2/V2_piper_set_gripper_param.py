@@ -11,7 +11,12 @@ from piper_sdk import *
 if __name__ == "__main__":
     piper = C_PiperInterface_V2("can0")
     piper.ConnectPort()
-    piper.GripperTeachingPendantParamConfig(100, 70, 1)
+    piper.GripperTeachingPendantParamConfig(100, 100, 1) 
+    '''引数：
+    リーダフォロワー制御時の感度倍率  値は[100~500]%
+    グリッパーの開閉幅最大値(爪と爪の間の長さ) 値は[0,70,100]mmのいずれか
+    リーダの操作時における操作抵抗感 値は[1~10]の範囲
+    '''
     piper.ArmParamEnquiryAndConfig(4)
     while True:
         print(piper.GetGripperTeachingPendantParamFeedback())
