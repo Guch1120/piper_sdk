@@ -8,39 +8,39 @@ class ArmMsgFeedbackLowSpd:
     '''
     msg_v2_feedback
     
-    驱动器信息高速反馈 0x6
+    ドライバ情報高速フィードバック 0x6
 
-    节点 ID:
+    ノード ID:
         0x1~0x06
     CAN ID:
         0X261~0x266
 
     Args:
-        can_id: canid,表示当前电机序号
-        vol: 当前驱动器电压
-        foc_temp: 驱动器温度
-        motor_temp: 电机温度
-        foc_status: 驱动器状态码
-        bus_current: 当前驱动器电流,单位0.001A,1.5KG关节电机无母线电流采样,默认发送0
+        can_id: CAN ID、現在のモーター番号を表す
+        vol: 現在のドライバ電圧
+        foc_temp: ドライバ温度
+        motor_temp: モーター温度
+        foc_status: ドライバステータスコード
+        bus_current: 現在のドライバ電流、単位0.001A、1.5KG関節モーターは母線電流サンプリングなし、デフォルトで0を送信
     
-    位描述:
+    ビット記述:
     
-        Byte 0:电压高八位, uint16, 当前驱动器电压单位: 0.1V
-        Byte 1:电压低八位
-        Byte 2:驱动器温度高八位, int16, 单位: 1℃
-        Byte 3:驱动器温度低八位
-        Byte 4:电机温度,int8,单位: 1℃
-        Byte 5:驱动器状态,uint8
-            bit[0] 电源电压是否过低(0--正常; 1--过低)
-            bit[1] 电机是否过温(0--正常; 1--过温)
-            bit[2] 驱动器是否过流(0--正常; 1--过流)
-            bit[3] 驱动器是否过温(0--正常; 1--过温)
-            bit[4] 碰撞保护状态(0--正常; 1--触发保护)-7.25修改,之前为传感器状态
-            bit[5] 驱动器错误状态(0: 正常; 1--错误)
-            bit[6] 驱动器使能状态(1--使能; 0--失能)
-            bit[7] 堵转保护状态(0--正常; 1--触发保护)-2024-7-25修改,之前为回零状态
-        Byte 6:母线电流高八位,uint16,当前驱动器电流单位: 0.001A,1.5KG关节电机无母线电流采样,默认发送0
-        Byte 7:母线电流低八位
+        Byte 0:電圧上位8ビット, uint16, 現在のドライバ電圧単位: 0.1V
+        Byte 1:電圧下位8ビット
+        Byte 2:ドライバ温度上位8ビット, int16, 単位: 1℃
+        Byte 3:ドライバ温度下位8ビット
+        Byte 4:モーター温度,int8,単位: 1℃
+        Byte 5:ドライバステータス,uint8
+            bit[0] 電源電圧低下(0--正常; 1--低下)
+            bit[1] モーター過熱(0--正常; 1--過熱)
+            bit[2] ドライバ過電流(0--正常; 1--過電流)
+            bit[3] ドライバ過熱(0--正常; 1--過熱)
+            bit[4] 衝突保護ステータス(0--正常; 1--保護トリガー)-7.25修正、以前はセンサーステータス
+            bit[5] ドライバエラーステータス(0: 正常; 1--エラー)
+            bit[6] ドライバ有効ステータス(1--有効; 0--無効)
+            bit[7] ストール保護ステータス(0--正常; 1--保護トリガー)-2024-7-25修正、以前は原点復帰ステータス
+        Byte 6:母線電流上位8ビット,uint16,現在のドライバ電流単位: 0.001A,1.5KG関節モーターは母線電流サンプリングなし、デフォルトで0を送信
+        Byte 7:母線電流下位8ビット
     '''
     '''
     msg_v2_feedback
@@ -133,10 +133,10 @@ class ArmMsgFeedbackLowSpd:
         self.foc_status.motor_overheating = bool(value & (1 << 1))
         self.foc_status.driver_overcurrent = bool(value & (1 << 2))
         self.foc_status.driver_overheating = bool(value & (1 << 3))
-        self.foc_status.collision_status = bool(value & (1 << 4)) # 碰撞状态
+        self.foc_status.collision_status = bool(value & (1 << 4)) # 衝突ステータス
         self.foc_status.driver_error_status = bool(value & (1 << 5))
         self.foc_status.driver_enable_status = bool(value & (1 << 6))
-        self.foc_status.stall_status = bool(value & (1 << 7)) # 堵转状态
+        self.foc_status.stall_status = bool(value & (1 << 7)) # ストールステータス
 
     def __str__(self):
         return (f"ArmMsgFeedbackLowSpd(\n"

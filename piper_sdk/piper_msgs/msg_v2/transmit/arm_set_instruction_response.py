@@ -8,24 +8,24 @@ class ArmMsgInstructionResponseConfig:
     '''
     msg_v2_transmit
     
-    设置指令应答
+    設定コマンド応答
 
     CAN ID:
         0x476
 
     Args:
-        instruction_index: 应答指令索引
-        zero_config_success_flag: 零点是否设置成功
+        instruction_index: 応答コマンドインデックス
+        zero_config_success_flag: ゼロ点設定成功フラグ
     
-    位描述:
+    ビット記述:
     
-        Byte 0: uint8, 应答指令索引
-                取设置指令 id 最后一个字节
-                例如：应答 0x471 设置指令时此位填充0x71
-        Byte 1: uint8, 零点是否设置成功
-                零点成功设置 : 0x01
-                设置失败/未设置: 0x00
-                仅在关节设置指令--成功设置 N 号电机当前位置为零点时应答 0x01
+        Byte 0: uint8, 応答コマンドインデックス
+                設定コマンドIDの最後のバイトを取得
+                例：0x471設定コマンドに応答する場合、このバイトに0x71を埋める
+        Byte 1: uint8, ゼロ点設定成功フラグ
+                ゼロ点設定成功 : 0x01
+                設定失敗/未設定: 0x00
+                関節設定コマンド--N号モーターの現在位置をゼロ点に設定成功した場合のみ0x01を応答
     '''
     '''
     msg_v2_transmit

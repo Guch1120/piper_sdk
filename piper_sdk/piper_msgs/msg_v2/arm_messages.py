@@ -11,24 +11,23 @@ from typing import (
     Optional,
 )
 from .arm_msg_type import ArmMsgType
-# 导入 feedback 子模块的类
+# feedbackサブモジュールのクラスをインポート
 from .feedback import *
-# 导入 transmit 子模块的类
+# transmitサブモジュールのクラスをインポート
 from .transmit import *
 
 class PiperMessage:
     '''
     msg_v2
     
-    Piper机械臂全部消息,为所有消息的汇总
+    Piperロボットアームの全メッセージ、全メッセージの要約
     '''
     '''
     msg_v2
     
     Piper Robotic Arm Complete Message Summary
     '''
-    def __init__(self, 
-                #  反馈
+    def __init__(self,                 #  フィードバック
                  type_: ArmMsgType = None,
                  time_stamp: float = 0.0,
                  arm_status_msgs: ArmMsgFeedbackStatus = None,
@@ -46,7 +45,7 @@ class PiperMessage:
                  arm_low_spd_feedback:ArmMsgFeedbackLowSpd=None,
                  arm_gripper_teaching_param_feedback:ArmMsgFeedbackGripperTeachingPendantParam=None,
                  arm_feedback_resp_set_instruction:ArmMsgFeedbackRespSetInstruction=None,
-                #  发送
+                 #  送信
                  arm_motion_ctrl_1: ArmMsgMotionCtrl_1=None,
                  arm_motion_ctrl_2: ArmMsgMotionCtrl_2=None,
                  arm_motion_ctrl_cartesian: ArmMsgMotionCtrlCartesian=None,
@@ -65,96 +64,96 @@ class PiperMessage:
                  arm_crash_protection_rating_config:ArmMsgCrashProtectionRatingConfig=None,
                  arm_gripper_teaching_param_config:ArmMsgGripperTeachingPendantParamConfig=None
                  ):
-        #-------------------------------反馈-------------------------------------------
-        # 初始化数据帧类型
+        #-------------------------------フィードバック-------------------------------------------
+        # データフレームタイプの初期化
         self.type_ = type_
-        # 时间戳
+        # タイムスタンプ
         self.time_stamp = time_stamp
-        # 初始化机械臂状态消息
+        # ロボットアームステータスメッセージの初期化
         self.arm_status_msgs = arm_status_msgs if arm_status_msgs else ArmMsgFeedbackStatus()
-        # 初始化机械臂关节反馈
+        # ロボットアーム関節フィードバックの初期化
         self.arm_joint_feedback = arm_joint_feedback if arm_joint_feedback else ArmMsgFeedBackJointStates()
-        # 初始化夹爪反馈
+        # グリッパーフィードバックの初期化
         self.gripper_feedback = gripper_feedback if gripper_feedback else ArmMsgFeedBackGripper()
-        # 初始化末端姿态反馈
+        # エンドポーズフィードバックの初期化
         self.arm_end_pose = arm_end_pose if arm_end_pose else ArmMsgFeedBackEndPose()
-        # 驱动器信息高速反馈
+        # ドライバ情報高速フィードバック
         self.arm_high_spd_feedback_1 = arm_high_spd_feedback if arm_high_spd_feedback else ArmMsgFeedbackHighSpd()
         self.arm_high_spd_feedback_2 = arm_high_spd_feedback if arm_high_spd_feedback else ArmMsgFeedbackHighSpd()
         self.arm_high_spd_feedback_3 = arm_high_spd_feedback if arm_high_spd_feedback else ArmMsgFeedbackHighSpd()
         self.arm_high_spd_feedback_4 = arm_high_spd_feedback if arm_high_spd_feedback else ArmMsgFeedbackHighSpd()
         self.arm_high_spd_feedback_5 = arm_high_spd_feedback if arm_high_spd_feedback else ArmMsgFeedbackHighSpd()
         self.arm_high_spd_feedback_6 = arm_high_spd_feedback if arm_high_spd_feedback else ArmMsgFeedbackHighSpd()
-        # 驱动器信息低速反馈
+        # ドライバ情報低速フィードバック
         self.arm_low_spd_feedback_1 = arm_low_spd_feedback if arm_low_spd_feedback else ArmMsgFeedbackLowSpd()
         self.arm_low_spd_feedback_2 = arm_low_spd_feedback if arm_low_spd_feedback else ArmMsgFeedbackLowSpd()
         self.arm_low_spd_feedback_3 = arm_low_spd_feedback if arm_low_spd_feedback else ArmMsgFeedbackLowSpd()
         self.arm_low_spd_feedback_4 = arm_low_spd_feedback if arm_low_spd_feedback else ArmMsgFeedbackLowSpd()
         self.arm_low_spd_feedback_5 = arm_low_spd_feedback if arm_low_spd_feedback else ArmMsgFeedbackLowSpd()
         self.arm_low_spd_feedback_6 = arm_low_spd_feedback if arm_low_spd_feedback else ArmMsgFeedbackLowSpd()
-        # 夹爪/示教器参数反馈指令
+        # グリッパー/ティーチングペンダントパラメータフィードバックコマンド
         self.arm_gripper_teaching_param_feedback = arm_gripper_teaching_param_feedback \
             if arm_gripper_teaching_param_feedback else ArmMsgFeedbackGripperTeachingPendantParam()
-        #-------------------------------发送-------------------------------------------
+        #-------------------------------送信-------------------------------------------
         self.arm_motion_ctrl_1 = arm_motion_ctrl_1 if arm_motion_ctrl_1 else ArmMsgMotionCtrl_1()
         self.arm_motion_ctrl_2 = arm_motion_ctrl_2 if arm_motion_ctrl_2 else ArmMsgMotionCtrl_2()
         self.arm_motion_ctrl_cartesian = arm_motion_ctrl_cartesian if arm_motion_ctrl_cartesian else ArmMsgMotionCtrlCartesian()
         self.arm_joint_ctrl = arm_joint_ctrl if arm_joint_ctrl else ArmMsgJointCtrl()
         self.arm_circular_ctrl = arm_circular_ctrl \
             if arm_circular_ctrl else ArmMsgCircularPatternCoordNumUpdateCtrl()
-        # 夹爪控制
+        # グリッパー制御
         self.arm_gripper_ctrl = arm_gripper_ctrl if arm_gripper_ctrl else ArmMsgGripperCtrl()
-        # 关节mit控制
+        # 関節MIT制御
         self.arm_joint_mit_ctrl = arm_joint_mit_ctrl if arm_joint_mit_ctrl else ArmMsgJointMitCtrl()
         self.arm_ms_config = arm_ms_config if arm_ms_config else ArmMsgMasterSlaveModeConfig()
-        # 电机使能/失能设置指令
+        # モーター有効/無効設定コマンド
         self.arm_motor_enable = arm_motor_enable if arm_motor_enable else ArmMsgMotorEnableDisableConfig()
-        # 查询电机角度/最大速度/最大加速度限制指令
+        # モーター角度/最大速度/最大加速度制限クエリコマンド
         self.arm_search_motor_max_angle_spd_acc_limit = arm_search_motor_max_angle_spd_acc_limit \
             if arm_search_motor_max_angle_spd_acc_limit else ArmMsgSearchMotorMaxAngleSpdAccLimit()
-        # 反馈当前电机限制角度/最大速度
+        # 現在のモーター制限角度/最大速度をフィードバック
         self.arm_feedback_current_motor_angle_limit_max_spd = arm_feedback_current_motor_angle_limit_max_spd \
             if arm_feedback_current_motor_angle_limit_max_spd else ArmMsgFeedbackCurrentMotorAngleLimitMaxSpd()
-        # 电机角度限制/最大速度设置指令
+        # モーター角度制限/最大速度設定コマンド
         self.arm_motor_angle_limit_max_spd_set = arm_motor_angle_limit_max_spd_set \
             if arm_motor_angle_limit_max_spd_set else ArmMsgMotorAngleLimitMaxSpdSet()
-        # 关节设置指令
+        # 関節設定コマンド
         self.arm_joint_config = arm_joint_config \
             if arm_joint_config else ArmMsgJointConfig()
-        # 设置指令应答
+        # 設定コマンド応答
         self.arm_set_instruction_response = arm_set_instruction_response \
             if arm_set_instruction_response else ArmMsgInstructionResponseConfig()
-        # 设置指令应答反馈
+        # 設定コマンド応答フィードバック
         self.arm_feedback_resp_set_instruction = arm_feedback_resp_set_instruction \
             if arm_feedback_resp_set_instruction else ArmMsgFeedbackRespSetInstruction()
-        # 机械臂参数查询与设置指令
+        # ロボットアームパラメータクエリおよび設定コマンド
         self.arm_param_enquiry_and_config = arm_param_enquiry_and_config \
             if arm_param_enquiry_and_config else ArmMsgParamEnquiryAndConfig()
-        # 反馈当前末端速度/加速度参数
+        # 現在の末端速度/加速度パラメータをフィードバック
         self.arm_feedback_current_end_vel_acc_param = arm_feedback_current_end_vel_acc_param \
             if arm_feedback_current_end_vel_acc_param else ArmMsgFeedbackCurrentEndVelAccParam()
-        # 末端速度/加速度参数设置指令
+        # 末端速度/加速度パラメータ設定コマンド
         self.arm_end_vel_acc_param_config = arm_end_vel_acc_param_config \
             if arm_end_vel_acc_param_config else ArmMsgEndVelAccParamConfig()
-        # 碰撞防护等级设置指令
+        # 衝突保護レベル設定コマンド
         self.arm_crash_protection_rating_config = arm_crash_protection_rating_config \
             if arm_crash_protection_rating_config else ArmMsgCrashProtectionRatingConfig()
-        # 碰撞防护等级设置反馈指令
+        # 衝突保護レベル設定フィードバックコマンド
         self.arm_crash_protection_rating_feedback = arm_crash_protection_rating_feedback \
             if arm_crash_protection_rating_feedback else ArmMsgFeedbackCrashProtectionRating()
-        # 反馈当前电机最大加速度限制
+        # 現在のモーター最大加速度制限をフィードバック
         self.arm_feedback_current_motor_max_acc_limit = arm_feedback_current_motor_max_acc_limit \
             if arm_feedback_current_motor_max_acc_limit else ArmMsgFeedbackCurrentMotorMaxAccLimit()
-        # 夹爪/示教器参数设置指令
+        # グリッパー/ティーチングペンダントパラメータ設定コマンド
         self.arm_gripper_teaching_param_config = arm_gripper_teaching_param_config \
             if arm_gripper_teaching_param_config else ArmMsgGripperTeachingPendantParamConfig()
-        # 反馈各个关节当前末端速度/加速度
+        # 各関節の現在の末端速度/加速度をフィードバック
         # self.arm_feedback_joint_vel_acc = arm_feedback_joint_vel_acc \
         #     if arm_feedback_joint_vel_acc else ArmMsgFeedbackJointVelAcc()
-        # 全部的电机当前限制角度/最大速度
+        # 全モーターの現在の制限角度/最大速度
         # self.arm_feedback_all_current_motor_angle_limit_max_spd = arm_feedback_all_current_motor_angle_limit_max_spd \
         #     if arm_feedback_all_current_motor_angle_limit_max_spd else ArmMsgFeedbackAllCurrentMotorAngleLimitMaxSpd()
-        # # 全部的电机最大加速度限制
+        # # 全モーターの最大加速度制限
         # self.arm_feedback_all_motor_max_acc_limit = arm_feedback_all_motor_max_acc_limit \
         #     if arm_feedback_all_motor_max_acc_limit else ArmMsgFeedbackAllCurrentMotorMaxAccLimit()
         self.firmware_data = bytearray()
@@ -201,7 +200,7 @@ class PiperMessage:
             return (f"Type: {self.type_}\n"f"Low Spd Feedback: {self.arm_low_spd_feedback_5}\n")
         elif(self.type_ == ArmMsgType.PiperMsgLowSpdFeed_6):
             return (f"Type: {self.type_}\n"f"Low Spd Feedback: {self.arm_low_spd_feedback_6}\n")
-        # 发送,transmit
+        # 送信,transmit
         elif(self.type_ == ArmMsgType.PiperMsgMotionCtrl_1):
             return (f"Type: {self.type_}\n"f"PiperMsgMotionCtrl_1: {self.arm_motion_ctrl_1}\n")
         elif(self.type_ == ArmMsgType.PiperMsgMotionCtrl_2):

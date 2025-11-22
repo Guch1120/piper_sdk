@@ -84,16 +84,16 @@ class C_PiperParamManager():
 # a.ResetDefaultParam()
 # print( a.GetCurrentPiperParam())
 
-# # ✅ 测试单例模式
+# # ✅ シングルトンパターンのテスト
 # manager1 = C_PiperParamManager()
 # manager2 = C_PiperParamManager()
 
-# print(manager1 is manager2)  # ✅ True，确保是同一个实例
+# print(manager1 is manager2)  # ✅ True，同じインスタンスであることを確認
 
-# # 修改 manager1 的参数
+# # manager1のパラメータを変更
 # manager1.SetGripperRangeParam(-500, 500)
-# print(manager2.GetCurrentPiperParam())  # ✅ manager2 也受影响，说明是同一个实例
+# print(manager2.GetCurrentPiperParam())  # ✅ manager2も影響を受ける、同じインスタンスであることを示す
 
-# # 复位参数
+# # パラメータをリセット
 # manager2.ResetDefaultParam()
-# print(manager1.GetCurrentPiperParam())  # ✅ manager1 也被复位，单例模式生效！
+# print(manager1.GetCurrentPiperParam())  # ✅ manager1もリセットされる、シングルトンパターンが有効！

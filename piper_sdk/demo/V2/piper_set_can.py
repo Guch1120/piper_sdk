@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 # -*-coding:utf8-*-
-# 本demo读取的是串口can消息
-# 使用指定参数的can bus
-# 注意，如果interface中的can_auto_init为False，需要先执行CreateCanBus初始化内部的__arm_can才能执行ConnectPort，否则会报错
-# 如果使用pcie转can或者串口can模块，需要将judge_flag置为False，否则检测的是Linux系统下的socketcan模块
-# 注意需要先赋予串口权限: sudo chmod 777 /dev/ttyACM0
-# 正常帧率为3040左右(链接单条臂)
+# このデモはシリアルCANメッセージを読み取ります
+# 指定されたパラメータのCANバスを使用します
+# 注意: interfaceのcan_auto_initがFalseの場合、ConnectPortを実行する前にCreateCanBusを実行して内部の__arm_canを初期化する必要があります。そうしないとエラーが発生します。
+# PCIe-CANまたはシリアルCANモジュールを使用する場合、judge_flagをFalseに設定する必要があります。そうしないと、Linuxシステム下のsocketcanモジュールが検出されます。
+# 注意: 先にシリアルポートの権限を付与する必要があります: sudo chmod 777 /dev/ttyACM0
+# 通常のフレームレートは約3040です（シングルアーム接続時）
 import time
 from piper_sdk import *
 
-# 测试代码
+# テストコード
 if __name__ == "__main__":
     piper = C_PiperInterface_V2(can_auto_init=False)
     piper.CreateCanBus(can_name="/dev/ttyACM0",

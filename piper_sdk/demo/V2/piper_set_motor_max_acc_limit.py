@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*-coding:utf8-*-
-# 注意demo无法直接运行，需要pip安装sdk后才能运行
-# V2版本sdk
-# 单独设定某个电机的最大加速度
-# 注意这个指令是通过协议直接写入到驱动flash中，不可实时更新
+# 注意: デモは直接実行できません。実行するにはまずpipでSDKをインストールする必要があります。
+# V2バージョンSDK
+# 特定のモーターの最大加速度を個別に設定します
+# 注意: このコマンドはプロトコルを通じてドライバのフラッシュに直接書き込まれるため、リアルタイムで更新することはできません
 import time
 from piper_sdk import *
 
@@ -17,7 +17,7 @@ if __name__ == "__main__":
     for i in range(1,7):
         piper.JointMaxAccConfig(i, 500)
         print(i)
-        time.sleep(0.5) # 数据的写入需要时间，发送完上一帧设定指令，需要延时一会
+        time.sleep(0.5) # データの書き込みには時間がかかります。前のフレームの設定コマンドを送信した後、しばらく遅延させる必要があります
     while True:
         piper.SearchAllMotorMaxAccLimit()
         print(piper.GetAllMotorMaxAccLimit())

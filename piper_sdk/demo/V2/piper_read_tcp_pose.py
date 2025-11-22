@@ -3,7 +3,7 @@
 """
 -------------------------------------------------
    File Name:    piper_read_tcp_pose.py
-   Description:  测试TCP偏移
+   Description:  TCPオフセットのテスト
    Author:       Jack
    Date:         2025-08-15
    Version:      1.0
@@ -21,10 +21,10 @@ def apply_tool_offset(pose, tool_offset):
     
     Args:
         pose: (X, Y, Z, RX, RY, RZ)
-            X,Y,Z: 单位0.001mm
-            RX,RY,RZ: 单位0.001度 (XYZ旋转顺序)
+            X,Y,Z: 単位0.001mm
+            RX,RY,RZ: 単位0.001度 (XYZ回転順序)
         tool_offset: (tool_x, tool_y, tool_z) 单位米
-            在J6坐标系下工具中心点的坐标值 
+            J6座標系におけるツール中心点の座標値 
         
     Returns:
         TCP_XYZ: (X_tcp, Y_tcp, Z_tcp) 单位0.001mm
@@ -86,23 +86,23 @@ def apply_tool_offset(pose, tool_offset):
 
 
 if __name__ == "__main__":
-    # 初始化机械臂连接
+    # ロボットアーム接続の初期化
     piper = C_PiperInterface_V2()
     piper.ConnectPort()
     
-    # # 等待机械臂启用
+    # # ロボットアームの有効化を待機
     # while not piper.DisablePiper():
     #     time.sleep(0.01)
     
-    # # 设置初始位置
+    # # 初期位置の設定
     # piper.MotionCtrl_2(0x01, 0x01, 100, 0x00)
     # piper.JointCtrl(0,0,0,0,0,0)
     
-    # 获取末端位姿并设置工具偏移
+    # エンドポーズを取得し、ツールオフセットを設定
     end_pose = piper.GetArmEndPoseMsgs().end_pose
-    tool_offset = (0, 0, 0.145)  # Z轴偏移145mm
+    tool_offset = (0, 0, 0.145)  # Z軸オフセット145mm
     
-    # 实时计算并显示TCP位置
+    # TCP位置をリアルタイムで計算して表示
     while True:
         pose = (
             end_pose.X_axis, 

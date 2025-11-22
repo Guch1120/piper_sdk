@@ -5,33 +5,33 @@ class ArmMsgCrashProtectionRatingConfig:
     '''
     msg_v2_transmit
     
-    碰撞防护等级设置指令
+    衝突保護レベル設定コマンド
     
     CAN ID:
         0x47A
 
-    有效值 : 0~8
+    有効値 : 0~8
 
-    等级 0 代表不检测碰撞； 6个关节可以独立设置
+    レベル0は衝突検出なしを表す；6つの関節は独立して設定可能
 
     Args:
-        joint_1_protection_level: 关节1的碰撞等级设定
-        joint_2_protection_level: 关节2的碰撞等级设定
-        joint_3_protection_level: 关节3的碰撞等级设定
-        joint_4_protection_level: 关节4的碰撞等级设定
-        joint_5_protection_level: 关节5的碰撞等级设定
-        joint_6_protection_level: 关节6的碰撞等级设定
+        joint_1_protection_level: 関節1の衝突レベル設定
+        joint_2_protection_level: 関節2の衝突レベル設定
+        joint_3_protection_level: 関節3の衝突レベル設定
+        joint_4_protection_level: 関節4の衝突レベル設定
+        joint_5_protection_level: 関節5の衝突レベル設定
+        joint_6_protection_level: 関節6の衝突レベル設定
     
-    位描述:
+    ビット記述:
     
-        Byte 0: 1 号关节碰撞防护等级, uint8
-        Byte 1: 2 号关节碰撞防护等级, uint8
-        Byte 2: 3 号关节碰撞防护等级, uint8
-        Byte 3: 4 号关节碰撞防护等级, uint8
-        Byte 4: 5 号关节碰撞防护等级, uint8
-        Byte 5: 6 号关节碰撞防护等级, uint8
-        Byte 6: 保留
-        Byte 7: 保留
+        Byte 0: 第1関節衝突保護レベル, uint8
+        Byte 1: 第2関節衝突保護レベル, uint8
+        Byte 2: 第3関節衝突保護レベル, uint8
+        Byte 3: 第4関節衝突保護レベル, uint8
+        Byte 4: 第5関節衝突保護レベル, uint8
+        Byte 5: 第6関節衝突保護レベル, uint8
+        Byte 6: 予約
+        Byte 7: 予約
     '''
     '''
     msg_v2_transmit

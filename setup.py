@@ -1,7 +1,7 @@
 import os
 from setuptools import setup, find_packages
 
-# 获取 setup.py 所在目录
+# setup.pyが配置されているディレクトリを取得
 here = os.path.abspath(os.path.dirname(__file__))
 
 setup(

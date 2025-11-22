@@ -5,27 +5,27 @@ class ArmMsgEndVelAccParamConfig:
     '''
     msg_v2_transmit
     
-    末端速度/加速度参数设置指令
+    先端速度/加速度パラメータ設定コマンド
     
     CAN ID:
         0x479
 
     Args:
-        end_max_linear_vel: 末端最大线速度,0x7FFF为设定无效数值
-        end_max_angular_vel: 末端最大角速度,0x7FFF为设定无效数值
-        end_max_linear_acc: 末端最大线加速度,0x7FFF为设定无效数值
-        end_max_angular_acc: 末端最大角加速度,0x7FFF为设定无效数值
+        end_max_linear_vel: 先端最大線速度,0x7FFFは無効値設定
+        end_max_angular_vel: 先端最大角速度,0x7FFFは無効値設定
+        end_max_linear_acc: 先端最大線加速度,0x7FFFは無効値設定
+        end_max_angular_acc: 先端最大角加速度,0x7FFFは無効値設定
     
-    位描述:
+    ビット記述:
     
-        Byte 0: 末端最大线速度 H, uint16, 单位 0.001m/s, (基于V1.5-2版本后增加无效数值0x7FFF)
-        Byte 1: 末端最大线速度 L,
-        Byte 2: 末端最大角速度 H, uint16, 单位 0.001rad/s, (基于V1.5-2版本后增加无效数值0x7FFF)
-        Byte 3: 末端最大角速度 L,
-        Byte 4: 末端最大线加速度 H, uint16, 单位 0.001m/s^2, (基于V1.5-2版本后增加无效数值0x7FFF)
-        Byte 5: 末端最大线加速度 L
-        Byte 6: 末端最大角加速度 H, uint16, 单位 0.001rad/s^2, (基于V1.5-2版本后增加无效数值0x7FFF)
-        Byte 7: 末端最大角加速度 L
+        Byte 0: 先端最大線速度 H, uint16, 単位 0.001m/s, (V1.5-2バージョン以降、無効値0x7FFFを追加)
+        Byte 1: 先端最大線速度 L,
+        Byte 2: 先端最大角速度 H, uint16, 単位 0.001rad/s, (V1.5-2バージョン以降、無効値0x7FFFを追加)
+        Byte 3: 先端最大角速度 L,
+        Byte 4: 先端最大線加速度 H, uint16, 単位 0.001m/s^2, (V1.5-2バージョン以降、無効値0x7FFFを追加)
+        Byte 5: 先端最大線加速度 L
+        Byte 6: 先端最大角加速度 H, uint16, 単位 0.001rad/s^2, (V1.5-2バージョン以降、無効値0x7FFFを追加)
+        Byte 7: 先端最大角加速度 L
     '''
     '''
     msg_v2_transmit

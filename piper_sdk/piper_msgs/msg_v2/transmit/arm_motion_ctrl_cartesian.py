@@ -5,18 +5,18 @@ class ArmMsgMotionCtrlCartesian():
     '''
     msg_v2_transmit
     
-    机械臂运动控制直角坐标系指令
+    ロボットアーム運動制御直交座標系コマンド
     
     CAN ID:
         0x152,0x153,0x154
 
     Args:
-        X_axis: X坐标,单位0.001mm
-        Y_axis: Y坐标,单位0.001mm
-        Z_axis: Z坐标,单位0.001mm
-        RX_axis: RX角度,单位0.001度
-        RY_axis: RY角度,单位0.001度
-        RZ_axis: RZ角度,单位0.001度
+        X_axis: X座標,単位0.001mm
+        Y_axis: Y座標,単位0.001mm
+        Z_axis: Z座標,単位0.001mm
+        RX_axis: RX角度,単位0.001度
+        RY_axis: RY角度,単位0.001度
+        RZ_axis: RZ角度,単位0.001度
     '''
     '''
     msg_v2_transmit
@@ -58,7 +58,7 @@ class ArmMsgMotionCtrlCartesian():
             (" RZ_axis ", self.RZ_axis)
         ]
 
-        # 生成格式化字符串，保留三位小数
+        # フォーマット文字列を生成、小数点以下3桁を保持
         formatted_ = "\n".join([f"{name}: {value}" for name, value in dict_])
         
         return f"ArmMsgMotionCtrlCartesian:\n{formatted_}"

@@ -63,14 +63,14 @@ class ArmMsgFeedbackStatusEnum:
         UNKNOWN = 0xFF
     @unique
     class TeachingState(_EnumBase):
-        DISABLED = 0x00               # 关闭
-        START_RECORDING = 0x01        # 开始示教记录（进入拖动示教模式）
-        STOP_RECORDING = 0x02         # 结束示教记录（退出拖动示教模式）
-        EXECUTE_TRAJECTORY = 0x03     # 执行示教轨迹（拖动示教轨迹复现）
-        PAUSE_EXECUTION = 0x04        # 暂停执行
-        RESUME_EXECUTION = 0x05       # 继续执行（轨迹复现继续）
-        TERMINATE_EXECUTION = 0x06    # 终止执行
-        MOVE_TO_START = 0x07          # 运动到轨迹起点
+        DISABLED = 0x00               # オフ
+        START_RECORDING = 0x01        # ティーチング記録開始（ドラッグティーチングモードに入る）
+        STOP_RECORDING = 0x02         # ティーチング記録終了（ドラッグティーチングモードを終了）
+        EXECUTE_TRAJECTORY = 0x03     # ティーチング軌道実行（ドラッグティーチング軌道再生）
+        PAUSE_EXECUTION = 0x04        # 実行一時停止
+        RESUME_EXECUTION = 0x05       # 実行再開（軌道再生再開）
+        TERMINATE_EXECUTION = 0x06    # 実行終了
+        MOVE_TO_START = 0x07          # 軌道始点へ移動
         UNKNOWN = 0xFF
     @unique
     class MotionStatus(_EnumBase):
@@ -82,87 +82,87 @@ class ArmMsgFeedbackStatus:
     '''
     msg_v2_feedback
     
-    机械臂状态
+    ロボットアームステータス
 
     CAN ID:
         0x2A1
 
     Args:
-        ctrl_mode: 控制模式
-        arm_status: 机械臂状态
-        mode_feed: 模式反馈
-        teach_status: 示教状态
-        motion_status: 运动状态
-        trajectory_num: 当前运行轨迹点序号
-        err_code: 故障码
+        ctrl_mode: 制御モード
+        arm_status: ロボットアームステータス
+        mode_feed: モードフィードバック
+        teach_status: ティーチングステータス
+        motion_status: 運動ステータス
+        trajectory_num: 現在実行中の軌道点番号
+        err_code: エラーコード
     
-    位描述:
+    ビット記述:
 
-        Byte 0:控制模式,uint8 
-            0x00 待机模式
-            0x01 CAN指令控制模式
-            0x02 示教模式
-            0x03 以太网控制模式
-            0x04 wifi控制模式
-            0x05 遥控器控制模式
-            0x06 联动示教输入模式
-            0x07 离线轨迹模式
-        Byte 1:机械臂状态,uint8 
+        Byte 0:制御モード,uint8 
+            0x00 待機モード
+            0x01 CANコマンド制御モード
+            0x02 ティーチングモード
+            0x03 イーサネット制御モード
+            0x04 Wi-Fi制御モード
+            0x05 リモコン制御モード
+            0x06 連動ティーチング入力モード
+            0x07 オフライン軌道モード
+        Byte 1:ロボットアームステータス,uint8 
             0x00 正常
-            0x01 急停
-            0x02 无解
-            0x03 奇异点
-            0x04 目标角度超过限
-            0x05 关节通信异常
-            0x06 关节抱闸未打开
-            0x07 机械臂发生碰撞
-            0x08 拖动示教时超速
-            0x09 关节状态异常
-            0x0A 其它异常
-            0x0B 示教记录
-            0x0C 示教执行
-            0x0D 示教暂停
-            0x0E 主控NTC过温
-            0x0F 释放电阻NTC过温
-        Byte 2:模式反馈,uint8 
+            0x01 緊急停止
+            0x02 解なし
+            0x03 特異点
+            0x04 目標角度制限超過
+            0x05 関節通信異常
+            0x06 関節ブレーキ未開放
+            0x07 ロボットアーム衝突発生
+            0x08 ドラッグティーチング中速度超過
+            0x09 関節ステータス異常
+            0x0A その他異常
+            0x0B ティーチング記録
+            0x0C ティーチング実行
+            0x0D ティーチング一時停止
+            0x0E メインコントローラNTC過熱
+            0x0F 放電抵抗NTC過熱
+        Byte 2:モードフィードバック,uint8 
             0x00 MOVE P
             0x01 MOVE J
             0x02 MOVE L
             0x03 MOVE C
-            0x04 MOVE M ---基于V1.5-2版本后
-            0x05 MOVE_CPV ---基于V1.6.5版本后
-        Byte 3:示教状态,uint8 
-            0x00 关闭
-            0x01 开始示教记录（进入拖动示教模式）
-            0x02 结束示教记录（退出拖动示教模式）
-            0x03 执行示教轨迹（拖动示教轨迹复现）
-            0x04 暂停执行
-            0x05 继续执行（轨迹复现继续）
-            0x06 终止执行
-            0x07 运动到轨迹起点
-        Byte 4:运动状态,uint8 
-            0x00 到达指定点位
-            0x01 未到达指定点位
-        Byte 5:当前运行轨迹点序号,uint8_t
-            0~255 (离线轨迹模式下反馈)
-        Byte 6:故障码*,uint16
-            bit[0]      1号关节角度超限位(0:正常 1:异常)
-            bit[1]      2号关节角度超限位(0:正常 1:异常)
-            bit[2]      3号关节角度超限位(0:正常 1:异常)
-            bit[3]      4号关节角度超限位(0:正常 1:异常)
-            bit[4]      5号关节角度超限位(0:正常 1:异常)
-            bit[5]      6号关节角度超限位(0:正常 1:异常)
-            bit[6]      保留(Reserved)
-            bit[7]      保留(Reserved)
-        Byte 7:故障码*,uint16
-            bit[0]      1号关节通信异常(0:正常 1:异常)
-            bit[1]      2号关节通信异常(0:正常 1:异常)
-            bit[2]      3号关节通信异常(0:正常 1:异常)
-            bit[3]      4号关节通信异常(0:正常 1:异常)
-            bit[4]      5号关节通信异常(0:正常 1:异常)
-            bit[5]      6号关节通信异常(0:正常 1:异常)
-            bit[6]      保留
-            bit[7]      保留
+            0x04 MOVE M ---V1.5-2バージョン以降
+            0x05 MOVE_CPV ---V1.6.5バージョン以降
+        Byte 3:ティーチングステータス,uint8 
+            0x00 オフ
+            0x01 ティーチング記録開始（ドラッグティーチングモードに入る）
+            0x02 ティーチング記録終了（ドラッグティーチングモードを終了）
+            0x03 ティーチング軌道実行（ドラッグティーチング軌道再生）
+            0x04 実行一時停止
+            0x05 実行再開（軌道再生再開）
+            0x06 実行終了
+            0x07 軌道始点へ移動
+        Byte 4:運動ステータス,uint8 
+            0x00 指定ポイント到達
+            0x01 指定ポイント未到達
+        Byte 5:現在実行中の軌道点番号,uint8_t
+            0~255 (オフライン軌道モードでのフィードバック)
+        Byte 6:エラーコード*,uint16
+            bit[0]      第1関節角度制限超過(0:正常 1:異常)
+            bit[1]      第2関節角度制限超過(0:正常 1:異常)
+            bit[2]      第3関節角度制限超過(0:正常 1:異常)
+            bit[3]      第4関節角度制限超過(0:正常 1:異常)
+            bit[4]      第5関節角度制限超過(0:正常 1:異常)
+            bit[5]      第6関節角度制限超過(0:正常 1:異常)
+            bit[6]      予約(Reserved)
+            bit[7]      予約(Reserved)
+        Byte 7:エラーコード*,uint16
+            bit[0]      第1関節通信異常(0:正常 1:異常)
+            bit[1]      第2関節通信異常(0:正常 1:異常)
+            bit[2]      第3関節通信異常(0:正常 1:異常)
+            bit[3]      第4関節通信異常(0:正常 1:異常)
+            bit[4]      第5関節通信異常(0:正常 1:異常)
+            bit[5]      第6関節通信異常(0:正常 1:異常)
+            bit[6]      予約
+            bit[7]      予約
     '''
     '''
     msg_v2_feedback
@@ -261,16 +261,16 @@ class ArmMsgFeedbackStatus:
         self._ctrl_mode:ArmMsgFeedbackStatusEnum.CtrlMode = ArmMsgFeedbackStatusEnum.CtrlMode.match_value(ctrl_mode)
         self.ctrl_mode = self._ctrl_mode
         self._arm_status:ArmMsgFeedbackStatusEnum.ArmStatus = ArmMsgFeedbackStatusEnum.ArmStatus.match_value(arm_status)
-        self.arm_status: int = self._arm_status      #机械臂状态
+        self.arm_status: int = self._arm_status      #ロボットアームステータス
         self._mode_feed:ArmMsgFeedbackStatusEnum.ModeFeed = ArmMsgFeedbackStatusEnum.ModeFeed.match_value(mode_feed)
-        self.mode_feed: int = self._mode_feed       #模式反馈
+        self.mode_feed: int = self._mode_feed       #モードフィードバック
         self._teach_status:ArmMsgFeedbackStatusEnum.TeachingState = ArmMsgFeedbackStatusEnum.TeachingState.match_value(teach_status)
-        self.teach_status: int = self._teach_status    #示教状态
+        self.teach_status: int = self._teach_status    #ティーチングステータス
         self._motion_status:ArmMsgFeedbackStatusEnum.MotionStatus = ArmMsgFeedbackStatusEnum.MotionStatus.match_value(motion_status)
-        self.motion_status: int = self._motion_status   #运动状态
-        self.trajectory_num: int = trajectory_num  #当前运行轨迹点序号
-        self._err_code = err_code         #故障码
-        self.err_status = self.ErrStatus()#故障码
+        self.motion_status: int = self._motion_status   #運動ステータス
+        self.trajectory_num: int = trajectory_num  #現在実行中の軌道点番号
+        self._err_code = err_code         #エラーコード
+        self.err_status = self.ErrStatus()#エラーコード
 
     @property
     def ctrl_mode(self) -> ArmMsgFeedbackStatusEnum.CtrlMode:

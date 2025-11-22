@@ -7,30 +7,30 @@ class ArmMsgJointConfig:
     '''
     msg_v2_transmit
     
-    关节设置指令
+    関節設定コマンド
 
     CAN ID:
         0x475
 
     Args:
-        joint_motor_num: 关节电机序号,[1, 7]
-        set_motor_current_pos_as_zero: 设置当前位置为零点, 有效值-0xAE
-        acc_param_config_is_effective_or_not: 加速度参数设置是否生效, 有效值-0xAE
-        max_joint_acc: 最大关节加速度,单位0.01rad/s^2(0x7FFF为设定无效数值),输入范围\[0, 500\]-->[0 rad/s^2, 5.0 rad/s^2]
-        clear_joint_err: 清除关节错误代码, 有效值-0xAE
+        joint_motor_num: 関節モーター番号,[1, 7]
+        set_motor_current_pos_as_zero: 現在位置をゼロ点に設定, 有効値-0xAE
+        acc_param_config_is_effective_or_not: 加速度パラメータ設定が有効かどうか, 有効値-0xAE
+        max_joint_acc: 最大関節加速度,単位0.01rad/s^2(0x7FFFは無効値設定),入力範囲\[0, 500\]-->[0 rad/s^2, 5.0 rad/s^2]
+        clear_joint_err: 関節エラーコードクリア, 有効値-0xAE
     
-    位描述:
+    ビット記述:
     
-        Byte 0: 关节电机序号 uint8, 值域 1-7
-                1-6 代表关节驱动器序号；
-                7 代表全部关节电机
-        Byte 1: 设置N号电机当前位置为零点: uint8, 有效值-0xAE
-        Byte 2: 加速度参数设置是否生效: uint8, 有效值-0xAE
-        Byte 3: 最大关节加速度 H: uint16, 单位 0.01rad/s^2.(基于V1.5-2版本后增加无效数值0x7FFF)
-        Byte 4: 最大关节加速度 L
-        Byte 5: 清除关节错误代码: uint8, 有效值-0xAE
-        Byte 6: 保留
-        Byte 7: 保留
+        Byte 0: 関節モーター番号 uint8, 値域 1-7
+                1-6 は関節ドライバ番号；
+                7 は全関節モーター
+        Byte 1: N号モーターの現在位置をゼロ点に設定: uint8, 有効値-0xAE
+        Byte 2: 加速度パラメータ設定が有効かどうか: uint8, 有効値-0xAE
+        Byte 3: 最大関節加速度 H: uint16, 単位 0.01rad/s^2.(V1.5-2バージョン以降、無効値0x7FFFを追加)
+        Byte 4: 最大関節加速度 L
+        Byte 5: 関節エラーコードクリア: uint8, 有効値-0xAE
+        Byte 6: 予約
+        Byte 7: 予約
     '''
     '''
     msg_v2_transmit

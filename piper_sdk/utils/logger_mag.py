@@ -10,7 +10,7 @@ class LogLevel(IntEnum):
     WARNING = logging.WARNING
     ERROR = logging.ERROR
     CRITICAL = logging.CRITICAL
-    SILENT = 100  # 自定义等级：屏蔽所有终端输出
+    SILENT = 100  # カスタムレベル：すべてのターミナル出力を抑制
 
 class ContextLoggerAdapter(logging.LoggerAdapter):
     def __init__(self, logger, extra):
@@ -64,14 +64,14 @@ class LogManager:
                 datefmt='%Y-%m-%d %H:%M:%S'
             )
 
-            # 控制台 handler
+            # コンソールハンドラ
             # if level < LogLevel.SILENT:
             stream_handler = logging.StreamHandler()
             stream_handler.setLevel(level)
             stream_handler.setFormatter(formatter)
             logger.addHandler(stream_handler)
 
-            # 文件 handler
+            # ファイルハンドラ
             file_handler = None
             if log_to_file:
                 file_handler = logging.FileHandler(log_file_path, encoding='utf-8', mode=file_mode)
@@ -82,7 +82,7 @@ class LogManager:
             cls._instances[global_area] = {
                 'logger': logger,
                 "level":level,
-                "stream_handler": stream_handler,  # 记录 stream handler
+                "stream_handler": stream_handler,  # ストリームハンドラを記録
                 "log_file_name": log_file_name,
                 "log_file_path": log_file_path,
                 "file_handler": file_handler,
@@ -131,7 +131,7 @@ class LogManager:
             if stream_handler:
                 stream_handler.setLevel(instance.get("level"))
 
-            # 文件 handler 逻辑处理
+            # ファイルハンドラのロジック処理
             skip = False
             if log_to_file:
                 os.makedirs(os.path.dirname(instance["log_file_path"]), exist_ok=True)
@@ -142,11 +142,11 @@ class LogManager:
                 if file_mode is not None:
                     instance["file_mode"] = file_mode
 
-                # 如果已有文件 handler
+                # 既存のファイルハンドラがある場合
                 if file_handler:
-                    # 若不强制更新，检测不支持动态更新的参数是否被修改
+                    # 強制更新しない場合、動的更新をサポートしないパラメータが変更されたかをチェック
                     if not force_update:
-                        # 修改记录的log等级
+                        # 記録されたログレベルを変更
                         file_handler.setLevel(instance.get("level"))
                         if (instance["file_mode"] != file_mode_instance):
                             adapter.warning(f"Attempt to update FileHandler with non-dynamic fields (file_mode). "
@@ -161,7 +161,7 @@ class LogManager:
                     else:
                         if (instance["file_mode"] != file_mode_instance or instance["log_file_path"] != file_handler.baseFilename):
                             adapter.debug(f"You are force-updating file handler")
-                            # 强制更新，删除旧 handler，重建
+                            # 強制更新、古いハンドラを削除して再構築
                             if(instance["file_mode"] == 'w'):
                                 adapter.warning(f"You are force-updating file handler with mode='w'"
                                                 f"This will overwrite the existing log file.")
@@ -176,7 +176,7 @@ class LogManager:
                             logger.addHandler(file_handler)
                             instance['file_handler'] = file_handler
                 else:
-                    # 没有旧 handler，直接添加
+                    # 古いハンドラがない場合、直接追加
                     file_handler = logging.FileHandler(instance["log_file_path"], encoding='utf-8', mode=instance["file_mode"])
                     file_handler.setLevel(instance.get("level"))
                     formatter = logging.Formatter(
@@ -221,7 +221,7 @@ class LogManager:
     #             os.remove(file_path)
     @classmethod
     def clear_log_files(cls):
-        """清除所有 .log 文件和空日志文件夹（保留 __init__.py）"""
+        """すべての.logファイルと空のログフォルダをクリア（__init__.pyは保持）"""
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         log_base_dir = os.path.join(base_dir, 'log')
         if not os.path.exists(log_base_dir):
@@ -231,7 +231,7 @@ class LogManager:
             for f in files:
                 if f.endswith('.log'):
                     os.remove(os.path.join(root, f))
-            # 如果子目录为空（删除完日志文件），就移除它
+            # サブディレクトリが空の場合（ログファイル削除後）、それを削除
             if not os.listdir(root):
                 os.rmdir(root)
 

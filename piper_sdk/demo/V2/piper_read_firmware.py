@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 # -*-coding:utf8-*-
-# 注意demo无法直接运行，需要pip安装sdk后才能运行
-# 读取机械臂软件固件版本并打印
+# 注意: デモは直接実行できません。実行するにはまずpipでSDKをインストールする必要があります。
+# ロボットアームのファームウェアバージョンを読み取って印刷します
 import time
 from piper_sdk import *
 
-# 测试代码
+# テストコード
 if __name__ == "__main__":
     piper = C_PiperInterface_V2()
     piper.ConnectPort()
-    time.sleep(0.03) # 需要时间去读取固件反馈帧，否则会反馈-0x4AF
+    time.sleep(0.03) # ファームウェアのフィードバックフレームを読み取るのに時間が必要です。そうしないと、-0x4AFが返されます。
     print(piper.GetPiperFirmwareVersion())
     # while True:
     #     piper.SearchPiperFirmwareVersion()

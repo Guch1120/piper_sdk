@@ -11,16 +11,16 @@ class ArmMessageMapping:
     '''
     msg_v2
     
-    机械臂消息类型和CAN ID的映射
+    ロボットアームメッセージタイプとCAN IDのマッピング
     '''
     '''
     msg_v2
     
     Mapping of Robotic Arm Message Types and CAN IDs
     '''
-    # 初始化映射字典
+    # マッピング辞書の初期化
     id_to_type_mapping = {
-        # 反馈,feedback
+        # フィードバック,feedback
         CanIDPiper.ARM_STATUS_FEEDBACK.value: ArmMsgType.PiperMsgStatusFeedback,
         CanIDPiper.ARM_END_POSE_FEEDBACK_1.value: ArmMsgType.PiperMsgEndPoseFeedback_1,
         CanIDPiper.ARM_END_POSE_FEEDBACK_2.value: ArmMsgType.PiperMsgEndPoseFeedback_2,
@@ -41,7 +41,7 @@ class ArmMessageMapping:
         CanIDPiper.ARM_INFO_LOW_SPD_FEEDBACK_4.value: ArmMsgType.PiperMsgLowSpdFeed_4,
         CanIDPiper.ARM_INFO_LOW_SPD_FEEDBACK_5.value: ArmMsgType.PiperMsgLowSpdFeed_5,
         CanIDPiper.ARM_INFO_LOW_SPD_FEEDBACK_6.value: ArmMsgType.PiperMsgLowSpdFeed_6,
-        # 发送,transmit
+        # 送信,transmit
         CanIDPiper.ARM_MOTION_CTRL_1.value: ArmMsgType.PiperMsgMotionCtrl_1,
         # CanIDPiper.ARM_STOP_CTRL.value: ArmMsgType.PiperMsgStopCtrl,
         # CanIDPiper.ARM_TRACK_CTRL.value: ArmMsgType.PiperMsgTrackCtrl,
@@ -58,7 +58,7 @@ class ArmMessageMapping:
         CanIDPiper.ARM_JOINT_CTRL_56.value: ArmMsgType.PiperMsgJointCtrl_56,
         CanIDPiper.ARM_CIRCULAR_PATTERN_COORD_NUM_UPDATE_CTRL.value: ArmMsgType.PiperMsgCircularPatternCoordNumUpdateCtrl,
         CanIDPiper.ARM_GRIPPER_CTRL.value: ArmMsgType.PiperMsgGripperCtrl,
-        #----------------------------------基于V1.5-2版本后---------------------------------------------#
+        #----------------------------------V1.5-2バージョン以降---------------------------------------------#
         CanIDPiper.ARM_JOINT_MIT_CTRL_1.value: ArmMsgType.PiperMsgJointMitCtrl_1,
         CanIDPiper.ARM_JOINT_MIT_CTRL_2.value: ArmMsgType.PiperMsgJointMitCtrl_2,
         CanIDPiper.ARM_JOINT_MIT_CTRL_3.value: ArmMsgType.PiperMsgJointMitCtrl_3,
@@ -87,7 +87,7 @@ class ArmMessageMapping:
         CanIDPiper.ARM_CRASH_PROTECTION_RATING_CONFIG.value: ArmMsgType.PiperMsgCrashProtectionRatingConfig,
         CanIDPiper.ARM_CRASH_PROTECTION_RATING_FEEDBACK.value: ArmMsgType.PiperMsgCrashProtectionRatingFeedback,
         CanIDPiper.ARM_FEEDBACK_CURRENT_MOTOR_MAX_ACC_LIMIT.value: ArmMsgType.PiperMsgFeedbackCurrentMotorMaxAccLimit,
-        #----------------------------------基于V1.5-2版本后---------------------------------------------#
+        #----------------------------------V1.5-2バージョン以降---------------------------------------------#
         CanIDPiper.ARM_GRIPPER_TEACHING_PENDANT_PARAM_CONFIG.value: ArmMsgType.PiperMsgGripperTeachingPendantParamConfig,
         CanIDPiper.ARM_GRIPPER_TEACHING_PENDANT_PARAM_FEEDBACK.value: ArmMsgType.PiperMsgGripperTeachingPendantParamFeedback,
         #---------------------------------------------------------------------------------------------#
@@ -107,33 +107,33 @@ class ArmMessageMapping:
     @staticmethod
     def get_mapping(can_id: Optional[int] = None, msg_type: Optional[ArmMsgType] = None):
         '''
-        根据输入的参数返回对应的映射值，输入 id 返回类型，输入类型返回 id
+        入力されたパラメータに基づいて対応するマッピング値を返します。IDを入力するとタイプを返し、タイプを入力するとIDを返します
         
         :param can_id: CAN ID
-        :param msg_type: 机械臂消息类型
-        :return: 对应的类型或 id
+        :param msg_type: ロボットアームメッセージタイプ
+        :return: 対応するタイプまたはID
         '''
         if can_id is not None and msg_type is not None:
-            raise ValueError("只能输入 CAN ID 或消息类型中的一个")
+            raise ValueError("CAN IDまたはメッセージタイプのいずれか1つだけを入力してください")
 
         if can_id is not None:
             if can_id in ArmMessageMapping.id_to_type_mapping:
                 return ArmMessageMapping.id_to_type_mapping[can_id]
             else:
-                raise ValueError(f"CAN ID {can_id} 不在映射中")
+                raise ValueError(f"CAN ID {can_id} はマッピングにありません")
 
         if msg_type is not None:
             if msg_type in ArmMessageMapping.type_to_id_mapping:
                 return ArmMessageMapping.type_to_id_mapping[msg_type]
             else:
-                raise ValueError(f"消息类型 {msg_type} 不在映射中")
+                raise ValueError(f"メッセージタイプ {msg_type} はマッピングにありません")
 
-        raise ValueError("必须输入 CAN ID 或消息类型中的一个")
+        raise ValueError("CAN IDまたはメッセージタイプのいずれか1つを入力する必要があります")
 
-# 测试代码
+# テストコード
 # if __name__ == "__main__":
-#     # 根据 ID 查找类型
+#     # IDに基づいてタイプを検索
 #     print(ArmMessageMapping.get_mapping(can_id=0x2A2))  # 输出: PiperMsgEndPoseFeedback_1 (0x2)
 
-#     # 根据类型查找 ID
+#     # タイプに基づいてIDを検索
 #     print(ArmMessageMapping.get_mapping(msg_type=ArmMsgType.PiperMsgJointFeedBack_56))  # 输出: 0x2A7

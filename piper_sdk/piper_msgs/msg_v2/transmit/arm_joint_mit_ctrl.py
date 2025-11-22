@@ -5,29 +5,29 @@ class ArmMsgJointMitCtrl():
     '''
     msg_v2_transmit
     
-    机械臂关节mit控制
+    ロボットアーム関節MIT制御
     
     CAN ID:
         0x15A,0x15B,0x15C,0x15D,0x15E,0x15F
     
-    每个ID对应单个关节,因此有六个ID
+    各IDは単一の関節に対応するため、6つのIDがあります
     
     Args:
-        pos_ref: 设定期望的目标位置
-        vel_ref: 设定电机运动的速度
-        kp: 比例增益，控制位置误差对输出力矩的影响
-        kd: 微分增益，控制速度误差对输出力矩的影响
-        t_ref: 目标力矩参考值，用于控制电机施加的力矩或扭矩
-        crc: 循环冗余校验，用于数据完整性验证
+        pos_ref: 期待される目標位置を設定
+        vel_ref: モーター運動速度を設定
+        kp: 比例ゲイン、出力トルクに対する位置誤差の影響を制御
+        kd: 微分ゲイン、出力トルクに対する速度誤差の影響を制御
+        t_ref: 目標トルク参照値、モーターが加える力またはトルクを制御するために使用
+        crc: 巡回冗長検査、データの完全性検証に使用
     
-    位描述:
+    ビット記述:
     
-        Byte 0: Pos_ref [bit15~bit8] 高8位
-        Byte 1: Pos_ref [bit7~bit0]  低8位
-        Byte 2: Vel_ref [bit11~bit4] 低12位
+        Byte 0: Pos_ref [bit15~bit8] 上位8ビット
+        Byte 1: Pos_ref [bit7~bit0]  下位8ビット
+        Byte 2: Vel_ref [bit11~bit4] 下位12ビット
         Byte 3: Vel_ref [bit3~bit0], Kp [bit11~bit8]
-        Byte 4: Kp [bit7~bit0],      Kp给定参考值: 10
-        Byte 5: Kd [bit11~bit4]      低12位,Kd给定参考值: 0.8
+        Byte 4: Kp [bit7~bit0],      Kp指定参照値: 10
+        Byte 5: Kd [bit11~bit4]      下位12ビット,Kd指定参照値: 0.8
         Byte 6: Kd [bit3~bit0] T_ref [bit7~bit4]
         Byte 7: T_ref [bit3~bit0] CRC [bit3~bit0]
     '''
@@ -75,7 +75,7 @@ class ArmMsgJointMitCtrl():
         self.crc = crc
     
     def __str__(self):
-        # 将角度乘以0.001，并保留三位小数
+        # 角度に0.001を掛け、小数点以下3桁を保持
         mit_args = [
             ("pos_ref", self.pos_ref),
             ("vel_ref", self.vel_ref ),
@@ -85,7 +85,7 @@ class ArmMsgJointMitCtrl():
             ("crc", self.crc )
         ]
 
-        # 生成格式化字符串，保留三位小数
+        # フォーマット文字列を生成、小数点以下3桁を保持
         formatted_str = "\n".join([f"{name}: {param}" for name, param in mit_args])
         
         return f"ArmMsgJointMitCtrl:\n{formatted_str}"
@@ -97,29 +97,29 @@ class ArmMsgAllJointMitCtrl:
     '''
     msg_v2_transmit
     
-    机械臂关节mit控制,全部关节
+    ロボットアーム関節MIT制御、全関節
     
     CAN ID:
         0x15A,0x15B,0x15C,0x15D,0x15E,0x15F
     
-    每个ID对应单个关节,因此有六个ID
+    各IDは単一の関節に対応するため、6つのIDがあります
     
     Args:
-        pos_ref: 设定期望的目标位置
-        vel_ref: 设定电机运动的速度
-        kp: 比例增益，控制位置误差对输出力矩的影响
-        kd: 微分增益，控制速度误差对输出力矩的影响
-        t_ref: 目标力矩参考值，用于控制电机施加的力矩或扭矩
-        crc: 循环冗余校验，用于数据完整性验证
+        pos_ref: 期待される目標位置を設定
+        vel_ref: モーター運動速度を設定
+        kp: 比例ゲイン、出力トルクに対する位置誤差の影響を制御
+        kd: 微分ゲイン、出力トルクに対する速度誤差の影響を制御
+        t_ref: 目標トルク参照値、モーターが加える力またはトルクを制御するために使用
+        crc: 巡回冗長検査、データの完全性検証に使用
     
-    位描述:
+    ビット記述:
     
-        Byte 0: Pos_ref [bit15~bit8] 高8位
-        Byte 1: Pos_ref [bit7~bit0]  低8位
-        Byte 2: Vel_ref [bit11~bit4] 低12位
+        Byte 0: Pos_ref [bit15~bit8] 上位8ビット
+        Byte 1: Pos_ref [bit7~bit0]  下位8ビット
+        Byte 2: Vel_ref [bit11~bit4] 下位12ビット
         Byte 3: Vel_ref [bit3~bit0], Kp [bit11~bit8]
-        Byte 4: Kp [bit7~bit0],      Kp给定参考值: 10
-        Byte 5: Kd [bit11~bit4]      低12位,Kd给定参考值: 0.8
+        Byte 4: Kp [bit7~bit0],      Kp指定参照値: 10
+        Byte 5: Kd [bit11~bit4]      下位12ビット,Kd指定参照値: 0.8
         Byte 6: Kd [bit3~bit0] T_ref [bit7~bit4]
         Byte 7: T_ref [bit3~bit0] CRC [bit3~bit0]
     '''

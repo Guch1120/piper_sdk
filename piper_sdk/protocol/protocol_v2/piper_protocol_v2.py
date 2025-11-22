@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*-coding:utf8-*-
-#机械臂协议V1版本，为方便后续修改协议升级，继承自base
+#ロボットアームプロトコルV2バージョン、将来のプロトコルアップグレードのためbaseから継承
 import can
 from typing import (
     Optional,
@@ -38,7 +38,7 @@ class C_PiperParserV2(C_PiperParserBase):
         return self.ProtocolVersion.ARM_PROROCOL_V2
 
     def DecodeMessage(self, rx_can_frame: Optional[can.Message], msg:PiperMessage):
-        '''解码消息,将can数据帧转为设定的类型
+        '''メッセージをデコード、CANデータフレームを設定されたタイプに変換
 
         Args:
             rx_can_frame (Optional[can.Message]): can 数据帧, 为输入
@@ -67,7 +67,7 @@ class C_PiperParserV2(C_PiperParserBase):
         can_id:int = rx_can_frame.arbitration_id
         can_data:bytearray = rx_can_frame.data
         can_time_now = rx_can_frame.timestamp
-        # 机械臂状态反馈,piper Status Feedback
+        # ロボットアーム状態フィードバック,piper Status Feedback
         if(can_id == CanIDPiper.ARM_STATUS_FEEDBACK.value):
             msg.type_ = ArmMessageMapping.get_mapping(can_id=can_id)
             msg.time_stamp = can_time_now
@@ -78,7 +78,7 @@ class C_PiperParserV2(C_PiperParserBase):
             msg.arm_status_msgs.motion_status = self.ConvertToNegative_8bit(self.ConvertBytesToInt(can_data,4,5),False)
             msg.arm_status_msgs.trajectory_num = self.ConvertToNegative_8bit(self.ConvertBytesToInt(can_data,5,6),False)
             msg.arm_status_msgs.err_code = self.ConvertToNegative_16bit(self.ConvertBytesToInt(can_data,6,8),False)
-        # 机械臂末端位姿,piper End-Effector Pose
+        # ロボットアーム末端姿勢,piper End-Effector Pose
         elif(can_id == CanIDPiper.ARM_END_POSE_FEEDBACK_1.value):
             msg.type_ = ArmMessageMapping.get_mapping(can_id=can_id)
             msg.time_stamp = can_time_now
@@ -94,7 +94,7 @@ class C_PiperParserV2(C_PiperParserBase):
             msg.time_stamp = can_time_now
             msg.arm_end_pose.RY_axis = self.ConvertToNegative_32bit(self.ConvertBytesToInt(can_data,0,4))
             msg.arm_end_pose.RZ_axis = self.ConvertToNegative_32bit(self.ConvertBytesToInt(can_data,4,8))
-        # 关节角度反馈,Joint Angle Feedback
+        # 関節角度フィードバック,Joint Angle Feedback
         elif(can_id == CanIDPiper.ARM_JOINT_FEEDBACK_12.value):
             msg.type_ = ArmMessageMapping.get_mapping(can_id=can_id)
             msg.time_stamp = can_time_now
@@ -110,14 +110,14 @@ class C_PiperParserV2(C_PiperParserBase):
             msg.time_stamp = can_time_now
             msg.arm_joint_feedback.joint_5 = self.ConvertToNegative_32bit(self.ConvertBytesToInt(can_data,0,4))
             msg.arm_joint_feedback.joint_6 = self.ConvertToNegative_32bit(self.ConvertBytesToInt(can_data,4,8))
-        # 夹爪反馈,Gripper Feedback
+        # グリッパーフィードバック,Gripper Feedback
         elif(can_id == CanIDPiper.ARM_GRIPPER_FEEDBACK.value):
             msg.type_ = ArmMessageMapping.get_mapping(can_id=can_id)
             msg.time_stamp = can_time_now
             msg.gripper_feedback.grippers_angle = self.ConvertToNegative_32bit(self.ConvertBytesToInt(can_data,0,4))
             msg.gripper_feedback.grippers_effort = self.ConvertToNegative_16bit(self.ConvertBytesToInt(can_data,4,6))
             msg.gripper_feedback.status_code = self.ConvertToNegative_8bit(self.ConvertBytesToInt(can_data,6,7),False)
-        # 驱动器信息高速反馈,High-Speed Driver Information Feedback
+        # ドライバー情報高速フィードバック,High-Speed Driver Information Feedback
         elif(can_id == CanIDPiper.ARM_INFO_HIGH_SPD_FEEDBACK_1.value):
             msg.type_ = ArmMessageMapping.get_mapping(can_id=can_id)
             msg.time_stamp = can_time_now
@@ -160,7 +160,7 @@ class C_PiperParserV2(C_PiperParserBase):
             msg.arm_high_spd_feedback_6.motor_speed = self.ConvertToNegative_16bit(self.ConvertBytesToInt(can_data,0,2))
             msg.arm_high_spd_feedback_6.current = self.ConvertToNegative_16bit(self.ConvertBytesToInt(can_data,2,4))
             msg.arm_high_spd_feedback_6.pos = self.ConvertToNegative_32bit(self.ConvertBytesToInt(can_data,4,8))
-        # 驱动器信息低速反馈,Low-Speed Driver Information Feedback
+        # ドライバー情報低速フィードバック,Low-Speed Driver Information Feedback
         elif(can_id == CanIDPiper.ARM_INFO_LOW_SPD_FEEDBACK_1.value):
             msg.type_ = ArmMessageMapping.get_mapping(can_id=can_id)
             msg.time_stamp = can_time_now
@@ -215,7 +215,7 @@ class C_PiperParserV2(C_PiperParserBase):
             msg.arm_low_spd_feedback_6.motor_temp = self.ConvertToNegative_8bit(self.ConvertBytesToInt(can_data,4,5))
             msg.arm_low_spd_feedback_6.foc_status_code = self.ConvertToNegative_8bit(self.ConvertBytesToInt(can_data,5,6),False)
             msg.arm_low_spd_feedback_6.bus_current = self.ConvertToNegative_16bit(self.ConvertBytesToInt(can_data,6,8),False)
-        # 设置指令应答，0x476
+        # 設定命令応答、0x476
         elif(can_id == CanIDPiper.ARM_FEEDBACK_RESP_SET_INSTRUCTION.value):
             msg.type_ = ArmMessageMapping.get_mapping(can_id=can_id)
             msg.time_stamp = can_time_now
@@ -249,7 +249,7 @@ class C_PiperParserV2(C_PiperParserBase):
             msg.time_stamp = can_time_now
             msg.arm_feedback_current_motor_max_acc_limit.joint_motor_num = self.ConvertToNegative_8bit(self.ConvertBytesToInt(can_data,0,1),False)
             msg.arm_feedback_current_motor_max_acc_limit.max_joint_acc = self.ConvertToNegative_16bit(self.ConvertBytesToInt(can_data,1,3),False)
-        # 机械臂控制指令2,0x151
+        # ロボットアーム制御命令2,0x151
         elif(can_id == CanIDPiper.ARM_MOTION_CTRL_2.value):
             msg.type_ = ArmMessageMapping.get_mapping(can_id=can_id)
             msg.time_stamp = can_time_now
@@ -258,7 +258,7 @@ class C_PiperParserV2(C_PiperParserBase):
             msg.arm_motion_ctrl_2.move_spd_rate_ctrl = self.ConvertToNegative_8bit(self.ConvertBytesToInt(can_data,2,3),False)
             msg.arm_motion_ctrl_2.mit_mode = self.ConvertToNegative_8bit(self.ConvertBytesToInt(can_data,3,4),False)
             msg.arm_motion_ctrl_2.residence_time = self.ConvertToNegative_8bit(self.ConvertBytesToInt(can_data,4,5),False)
-        # 读取主臂发送的目标joint数值
+        # マスターアームが送信する目標joint値を読み取り
         elif(can_id == CanIDPiper.ARM_JOINT_CTRL_12.value):
             msg.type_ = ArmMessageMapping.get_mapping(can_id=can_id)
             msg.time_stamp = can_time_now
@@ -274,7 +274,7 @@ class C_PiperParserV2(C_PiperParserBase):
             msg.time_stamp = can_time_now
             msg.arm_joint_ctrl.joint_5 = self.ConvertToNegative_32bit(self.ConvertBytesToInt(can_data,0,4))
             msg.arm_joint_ctrl.joint_6 = self.ConvertToNegative_32bit(self.ConvertBytesToInt(can_data,4,8))
-        # 夹爪
+        # グリッパー
         elif(can_id == CanIDPiper.ARM_GRIPPER_CTRL.value):
             msg.type_ = ArmMessageMapping.get_mapping(can_id=can_id)
             msg.time_stamp = can_time_now
@@ -282,25 +282,25 @@ class C_PiperParserV2(C_PiperParserBase):
             msg.arm_gripper_ctrl.grippers_effort = self.ConvertToNegative_16bit(self.ConvertBytesToInt(can_data,4,6))
             msg.arm_gripper_ctrl.status_code = self.ConvertToNegative_8bit(self.ConvertBytesToInt(can_data,6,7),False)
             msg.arm_gripper_ctrl.set_zero = self.ConvertToNegative_8bit(self.ConvertBytesToInt(can_data,7,8),False)
-        # 固件版本
+        # ファームウェアバージョン
         elif(can_id == CanIDPiper.ARM_FIRMWARE_READ.value):
             msg.type_ = ArmMessageMapping.get_mapping(can_id=can_id)
             msg.time_stamp = can_time_now
             msg.firmware_data = can_data
-        # 夹爪/示教器参数反馈指令(基于V1.5-2版本后)
+        # グリッパー/ティーチングペンダントパラメータフィードバック命令(V1.5-2バージョン以降)
         elif(can_id == CanIDPiper.ARM_GRIPPER_TEACHING_PENDANT_PARAM_FEEDBACK.value):
             msg.type_ = ArmMessageMapping.get_mapping(can_id=can_id)
             msg.time_stamp = can_time_now
             msg.arm_gripper_teaching_param_feedback.teaching_range_per = self.ConvertToNegative_8bit(self.ConvertBytesToInt(can_data,0,1),False)
             msg.arm_gripper_teaching_param_feedback.max_range_config = self.ConvertToNegative_8bit(self.ConvertBytesToInt(can_data,1,2),False)
-            # (基于V1.5-8版本后)
+            # (V1.5-8バージョン以降)
             msg.arm_gripper_teaching_param_feedback.teaching_friction = self.ConvertToNegative_8bit(self.ConvertBytesToInt(can_data,2,3),False)
         else:
             ret = False
         return ret
 
     def EncodeMessage(self, msg:PiperMessage, tx_can_frame: Optional[can.Message]):
-        '''将消息转为can数据帧
+        '''メッセージをCANデータフレームに変換
 
         Args:
             msg (PiperMessage): 自定义数据
@@ -421,7 +421,7 @@ class C_PiperParserV2(C_PiperParserBase):
                                 self.ConvertToList_8bit(msg.arm_gripper_teaching_param_config.max_range_config,False) + \
                                 self.ConvertToList_8bit(msg.arm_gripper_teaching_param_config.teaching_friction,False) + \
                                 [0, 0, 0, 0, 0]
-        # 机械臂MIT单独控制电机
+        # ロボットアームMIT単独モーター制御
         elif(msg_type_ == ArmMsgType.PiperMsgJointMitCtrl_1 or
              msg_type_ == ArmMsgType.PiperMsgJointMitCtrl_2 or
              msg_type_ == ArmMsgType.PiperMsgJointMitCtrl_3 or

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*-coding:utf8-*-
-# can总线读取二次封装
+# CANバス読み取りの二次カプセル化
 import can
 from can.message import Message
 import time
@@ -19,15 +19,15 @@ from typing import (
 
 class C_STD_CAN():
     '''
-    基础CAN数据帧的收发,内无线程创建,需要在类外调用的时候创建线程来循环read
+    基本的なCANデータフレームの送受信。内部でスレッドは作成されません。クラス外で呼び出す際に、ループ読み取り用のスレッドを作成する必要があります
     
     Args:
-        channel_name: can的端口名称
-        bustype: can总线类型,默认为socket can
-        expected_bitrate: 预期can总线的波特率
-        judge_flag: 是否在实例化该类时进行can端口判断,有些情况需要False 
-        auto_init: 是否自动初始化can,也就是实例化can.interface.Bus
-        callback_function: ReadCanMessage中的回调函数,应传入函数
+        channel_name: CANポート名
+        bustype: CANバスタイプ、デフォルトはsocket can
+        expected_bitrate: 期待されるCANバスのボーレート
+        judge_flag: クラスのインスタンス化時にCANポートの判定を行うかどうか。Falseが必要な場合もあります
+        auto_init: CANを自動的に初期化するかどうか、つまりcan.interface.Busをインスタンス化するかどうか
+        callback_function: ReadCanMessage内のコールバック関数、関数を渡す必要があります
     '''
     '''
     Basic CAN Frame Send/Receive with Thread Creation
@@ -52,17 +52,17 @@ class C_STD_CAN():
         self.channel_name = channel_name
         self.bustype = bustype
         self.expected_bitrate = expected_bitrate
-        self.rx_message:Optional[Message] = Message()   #创建消息接收类
-        self.callback_function = callback_function  #接收回调函数
+        self.rx_message:Optional[Message] = Message()   #メッセージ受信クラスの作成
+        self.callback_function = callback_function  #受信コールバック関数
         self.bus = None
         if(judge_flag):
             self.JudgeCanInfo()
         if(auto_init):
-            self.Init()#创建can总线交互
+            self.Init()#CANバスインタラクションの作成
         
     def __del__(self):
         try:
-            self.bus.shutdown()  # 关闭 CAN 总线
+            self.bus.shutdown()  # CANバスを閉じる
             # print("CAN bus connection properly shut down.")
         except AttributeError:
             print("CAN bus connection was not properly initialized.")
@@ -70,7 +70,7 @@ class C_STD_CAN():
             print(f"Error occurred while shutting down CAN bus: {e}")
     
     def Init(self):
-        '''初始化can总线
+        '''CANバスの初期化
         '''
         '''Initialize the CAN bus.
         '''
@@ -84,13 +84,13 @@ class C_STD_CAN():
             self.bus = None
 
     def Close(self):
-        '''关闭can总线
+        '''CANバスを閉じる
         '''
         '''Close the CAN bus.
         '''
         if self.bus is not None:
             try:
-                self.bus.shutdown()  # 关闭 CAN 总线
+                self.bus.shutdown()  # CANバスを閉じる
                 # print("CAN bus connection properly shut down.")
             except AttributeError:
                 print("CAN bus connection was not properly initialized.")
@@ -107,20 +107,20 @@ class C_STD_CAN():
     
     def JudgeCanInfo(self):
         '''
-        类初始化时是否检测基础信息
+        クラス初期化時に基本情報を検出するかどうか
         '''
         '''
         Whether to check basic information during class initialization.
         '''
-        # 检查 CAN 端口是否存在
+        # CANポートが存在するか確認
         if not self.is_can_socket_available(self.channel_name):
             raise ValueError(f"CAN socket {self.channel_name} does not exist.")
         print(self.channel_name, " is exist")
-        # 检查 CAN 端口是否 UP
+        # CANポートがUP状態か確認
         if not self.is_can_port_up(self.channel_name):
             raise RuntimeError(f"CAN port {self.channel_name} is not UP.")
         print(self.channel_name, " is UP")
-        # 检查 CAN 端口的比特率
+        # CANポートのボーレートを確認
         actual_bitrate = self.get_can_bitrate(self.channel_name)
         if self.expected_bitrate is not None and not (actual_bitrate == self.expected_bitrate):
             raise ValueError(f"CAN port {self.channel_name} bitrate is {actual_bitrate} bps, expected {self.expected_bitrate} bps.")
@@ -136,7 +136,7 @@ class C_STD_CAN():
         if self.is_can_bus_ok():
             self.rx_message = self.bus.recv()
             if self.rx_message and self.callback_function:
-                self.callback_function(self.rx_message) #回调函数处理接收的原始数据
+                self.callback_function(self.rx_message) #コールバック関数で受信した生データを処理
         else:
             print("CAN bus is not OK, skipping message read")
 
@@ -165,7 +165,7 @@ class C_STD_CAN():
 
     def is_can_bus_ok(self) -> bool:
         '''
-        检查CAN总线状态是否正常。
+        CANバスの状態が正常かどうかを確認します。
         '''
         '''
         Check whether the CAN bus status is normal.
@@ -178,7 +178,7 @@ class C_STD_CAN():
             return True
         elif bus_state == can.BusState.PASSIVE:
             print("CAN bus state: PASSIVE - Warning level errors are occurring")
-            return False  # 可以根据需要调整
+            return False  # 必要に応じて調整可能
         elif bus_state == can.BusState.ERROR:
             print("CAN bus state: ERROR - Communication may be impaired")
             return False
@@ -188,7 +188,7 @@ class C_STD_CAN():
     
     def is_can_socket_available(self, channel_name: str) -> bool:
         '''
-        检查给定的 CAN 端口是否存在。
+        指定されたCANポートが存在するか確認します。
         '''
         '''
         Check if the given CAN port exists.
@@ -202,7 +202,7 @@ class C_STD_CAN():
 
     def get_can_ports(self) -> list:
         '''
-        获取系统中所有可用的 CAN 端口。
+        システム内のすべての利用可能なCANポートを取得します。
         '''
         '''
         Get all available CAN ports in the system.
@@ -216,7 +216,7 @@ class C_STD_CAN():
 
     def can_port_info(self, channel_name: str) -> str:
         '''
-        获取指定 CAN 端口的详细信息，包括状态、类型和比特率。
+        指定されたCANポートの詳細情報（状態、タイプ、ボーレートを含む）を取得します。
         '''
         '''
         Get detailed information about the specified CAN port, including status, type, and bit rate.
@@ -233,7 +233,7 @@ class C_STD_CAN():
 
     def is_can_port_up(self, channel_name: str) -> bool:
         '''
-        检查 CAN 端口是否为 UP 状态。
+        CANポートがUP状態かどうかを確認します。
         '''
         '''
         Check if the CAN port is in the UP state.
@@ -247,7 +247,7 @@ class C_STD_CAN():
 
     def get_can_bitrate(self, channel_name: str) -> str:
         '''
-        获取指定 CAN 端口的比特率。
+        指定されたCANポートのボーレートを取得します。
         '''
         '''
         Get the bit rate of the specified CAN port.
@@ -266,7 +266,7 @@ class C_STD_CAN():
             print(f"Error while getting bitrate: {e}")
             return "Unknown"
 
-## 示例代码
+## サンプルコード
 # if __name__ == "__main__":
 #     try:
 #         can_obj = C_STD_CAN(channel_name="can0")

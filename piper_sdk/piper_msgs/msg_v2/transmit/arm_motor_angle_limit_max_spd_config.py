@@ -7,16 +7,16 @@ class ArmMsgMotorAngleLimitMaxSpdSet:
     '''
     msg_v2_transmit
     
-    电机角度限制/最大速度设置指令-V2(基于V1.5-2版本后增加无效数值0x7FFF)
+    モーター角度制限/最大速度設定コマンド-V2（V1.5-2バージョン以降、無効値0x7FFFを追加）
 
     CAN ID:
         0x474
 
     Args:
-        motor_num: 关节电机序号
-        max_angle_limit: 最大角度限制,单位 0.1°,0x7FFF为设定无效数值
-        min_angle_limit: 最小角度限制,单位 0.1°,0x7FFF为设定无效数值
-        max_joint_spd: 最大关节速度,单位 0.001rad/s,范围[0,3000],0x7FFF为设定无效数值
+        motor_num: 関節モーター番号
+        max_angle_limit: 最大角度制限,単位 0.1°,0x7FFFは無効値設定
+        min_angle_limit: 最小角度制限,単位 0.1°,0x7FFFは無効値設定
+        max_joint_spd: 最大関節速度,単位 0.001rad/s,範囲[0,3000],0x7FFFは無効値設定
     
     |joint_name|     limit(rad)       |    limit(angle)    |     limit(rad/s)   |
     |----------|     ----------       |     ----------     |     ----------     |
@@ -27,15 +27,15 @@ class ArmMsgMotorAngleLimitMaxSpdSet:
     |joint5    |   [-1.22, 1.22]      |    [-70.0, 70.0]   |      [0, 3.0]      |
     |joint6    |   [-2.09439, 2.09439]|    [-120.0, 120.0] |      [0, 3.0]      |
     
-    位描述:
+    ビット記述:
     
-        Byte 0: 关节电机序号 uint8, 值域 1-6:1-6 代表关节驱动器序号
-        Byte 1: 最大角度限制 H: int16, 单位 0.1°(基于V1.5-2版本后增加无效数值0x7FFF)
-        Byte 2: 最大角度限制 L
-        Byte 3: 最小角度限制 H: int16, 单位 0.1°(基于V1.5-2版本后增加无效数值0x7FFF)
-        Byte 4: 最小角度限制 L
-        Byte 5: 最大关节速度 H: uint16, 单位 0.001rad/s(基于V1.5-2版本后增加无效数值0x7FFF)
-        Byte 6: 最大关节速度 L
+        Byte 0: 関節モーター番号 uint8, 値域 1-6:1-6 は関節ドライバ番号
+        Byte 1: 最大角度制限 H: int16, 単位 0.1°(V1.5-2バージョン以降、無効値0x7FFFを追加)
+        Byte 2: 最大角度制限 L
+        Byte 3: 最小角度制限 H: int16, 単位 0.1°(V1.5-2バージョン以降、無効値0x7FFFを追加)
+        Byte 4: 最小角度制限 L
+        Byte 5: 最大関節速度 H: uint16, 単位 0.001rad/s(V1.5-2バージョン以降、無効値0x7FFFを追加)
+        Byte 6: 最大関節速度 L
     '''
     '''
     msg_v2_transmit

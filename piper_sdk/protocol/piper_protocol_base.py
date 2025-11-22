@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*-coding:utf8-*-
-#机械臂协议解析基类
+#ロボットアームプロトコル解析基底クラス
 
 from abc import ABC, abstractmethod
 from enum import Enum, auto
@@ -14,14 +14,14 @@ from ..utils import logger, global_area
 
 class C_PiperParserBase(ABC):
     '''
-    Piper机械臂数据解析基类
+    Piperロボットアームデータ解析基底クラス
     '''
     '''
     Piper Robot Arm Data Parsing Base Class
     '''
     class ProtocolVersion(Enum):
         '''
-        协议版本枚举,需要在派生类中指定
+        プロトコルバージョン列挙、派生クラスで指定する必要があります
         '''
         '''
         Protocol Version Enumeration, needs to be specified in the derived class.
@@ -41,7 +41,7 @@ class C_PiperParserBase(ABC):
     @abstractmethod
     def DecodeMessage(self):
         '''
-        解码消息,将can数据帧转为设定的类型
+        メッセージをデコードし、CANデータフレームを設定されたタイプに変換します
         '''
         '''
         Decode the message, converting the CAN data frame into the specified type.
@@ -51,9 +51,9 @@ class C_PiperParserBase(ABC):
     @abstractmethod
     def EncodeMessage(self):
         '''
-        将消息转为can数据帧
+        メッセージをCANデータフレームに変換します
         
-        只将输入数据转换为can数据的id和data, 没有为can message赋值channel、dlc、is_extended_id
+        入力データをCANデータのIDとデータに変換するだけで、CANメッセージのchannel、dlc、is_extended_idには値を割り当てません
         '''
         '''
         Convert the message into a CAN data frame.
@@ -65,7 +65,7 @@ class C_PiperParserBase(ABC):
     @abstractmethod
     def GetParserProtocolVersion(self):
         '''
-        获取当前协议版本
+        現在のプロトコルバージョンを取得します
         '''
         '''
         Get the current protocol version.
@@ -74,10 +74,10 @@ class C_PiperParserBase(ABC):
     
     def ConvertToNegative_8bit(self, value: int, signed:bool=True) -> int:
         '''
-        将输入的整数转换为8位整数。
-        输入 value 范围:[0,255]
-        如果 signed 为 True,则转换为8位有符号整数。[-128, 127]
-        如果 signed 为 False,则转换为8位无符号整数。[0, 255]
+        入力された整数を8ビット整数に変換します。
+        入力 value 範囲:[0,255]
+        signed が True の場合、8ビット符号付き整数に変換されます。[-128, 127]
+        signed が False の場合、8ビット符号なし整数に変換されます。[0, 255]
         '''
         '''
         Convert the input integer to an 8-bit integer.
@@ -85,60 +85,60 @@ class C_PiperParserBase(ABC):
         If signed is True, it will be converted to a 32-bit signed integer. [-128, 127]
         If signed is False, it will be converted to a 32-bit unsigned integer. [0, 255]
         '''
-        # 范围检查
+        # 範囲チェック
         if not (0 <= value <= 255):
             self.logger.error("Error ConvertToNegative_8bit:  Input value exceeds the range [0, 255].")
-        # 转换成 8 位无符号整数
-        value &= 0xFF  # 将 value 转换成 8 位无符号整数
+        # 8ビット符号なし整数に変換
+        value &= 0xFF  # value を 8 ビット符号なし整数に変換
         if signed:
-            if value & 0x80:  # 检查符号位
-                value -= 0x100  # 如果符号位为 1，表示负数，需要减去 2^8
+            if value & 0x80:  # 符号ビットをチェック
+                value -= 0x100  # 符号ビットが 1 の場合、負数を表すため、2^8 を減算する必要があります
         return value
 
     def ConvertToNegative_int8_t(self, value: int) -> int:
         '''
-        将输入的整数转换为8位有符号整数。
-        输入 value 范围:[0,255]
-        return范围: [-128, 127]
+        入力された整数を8ビット符号付き整数に変換します。
+        入力 value 範囲:[0,255]
+        return範囲: [-128, 127]
         '''
         '''
         Convert the input integer to an 8-bit signed integer.
         input value range:[0,255]
         return Range: [-128, 127]
         '''
-        # 范围检查
+        # 範囲チェック
         if not (0 <= value <= 255):
             self.logger.error("Error ConvertToNegative_int8_t: Input value exceeds the range [0, 255].")
-        # 转换成 8 位无符号整数
-        value &= 0xFF  # 将 value 转换成 8 位无符号整数
-        if value & 0x80:  # 检查符号位
-            value -= 0x100  # 如果符号位为 1，表示负数，需要减去 2^8
+        # 8ビット符号なし整数に変換
+        value &= 0xFF  # value を 8 ビット符号なし整数に変換
+        if value & 0x80:  # 符号ビットをチェック
+            value -= 0x100  # 符号ビットが 1 の場合、負数を表すため、2^8 を減算する必要があります
         return value
 
     def ConvertToNegative_uint8_t(self, value: int) -> int:
         '''
-        将输入的整数转换为8位无符号整数。
-        输入 value 范围:[0,255]
-        return 范围: [0, 255]
+        入力された整数を8ビット符号なし整数に変換します。
+        入力 value 範囲:[0,255]
+        return 範囲: [0, 255]
         '''
         '''
         Convert the input integer to an 8-bit unsigned integer.
         input value range:[0,255]
         return Range: [0, 255]
         '''
-        # 范围检查
+        # 範囲チェック
         if not (0 <= value <= 255):
             self.logger.error("Error ConvertToNegative_uint8_t: Input value exceeds the range [0, 255].")
-        # 转换成 8 位无符号整数
-        value &= 0xFF  # 将 value 转换成 8 位无符号整数
+        # 8ビット符号なし整数に変換
+        value &= 0xFF  # value を 8 ビット符号なし整数に変換
         return value
 
     def ConvertToNegative_16bit(self, value: int, signed:bool=True) -> int:
         '''
-        将输入的整数转换为16位整数。
-        输入 value 范围:[0,65535]
-        如果 signed 为 True,则转换为16位有符号整数。[-32768, 32767]
-        如果 signed 为 False,则转换为16位无符号整数。[0, 65535]
+        入力された整数を16ビット整数に変換します。
+        入力 value 範囲:[0,65535]
+        signed が True の場合、16ビット符号付き整数に変換されます。[-32768, 32767]
+        signed が False の場合、16ビット符号なし整数に変換されます。[0, 65535]
         '''
         '''
         Convert the input integer to a 16-bit integer.
@@ -146,60 +146,60 @@ class C_PiperParserBase(ABC):
         If signed is True, it will be converted to a 16-bit signed integer. Range: [-32768, 32767]
         If signed is False, it will be converted to a 16-bit unsigned integer. Range: [0, 65535]
         '''
-        # 范围检查
+        # 範囲チェック
         if not (0 <= value <= 65535):
             self.logger.error("Error ConvertToNegative_16bit: Input value exceeds the range [0, 65535].")
-        # 转换成 16 位无符号整数
-        value &= 0xFFFF  # 将 value 转换成 16 位无符号整数
+        # 16ビット符号なし整数に変換
+        value &= 0xFFFF  # value を 16 ビット符号なし整数に変換
         if signed:
-            if value & 0x8000:  # 检查符号位
-                value -= 0x10000  # 如果符号位为 1，表示负数，需要减去 2^16
+            if value & 0x8000:  # 符号ビットをチェック
+                value -= 0x10000  # 符号ビットが 1 の場合、負数を表すため、2^16 を減算する必要があります
         return value
     
     def ConvertToNegative_int16_t(self, value: int) -> int:
         '''
-        将输入的整数转换为16位有符号整数。
-        输入 value 范围:[0,65535]
-        return 范围: [-32768, 32767]
+        入力された整数を16ビット符号付き整数に変換します。
+        入力 value 範囲:[0,65535]
+        return 範囲: [-32768, 32767]
         '''
         '''
         Convert the input integer to a 16-bit signed integer.
         input value range:[0,65535]
         return Range: [-32768, 32767]
         '''
-        # 范围检查
+        # 範囲チェック
         if not (0 <= value <= 65535):
             self.logger.error("Error ConvertToNegative_int16_t: Input value exceeds the range [0, 65535].")
-        # 转换成 8 位无符号整数
-        value &= 0xFFFF  # 将 value 转换成 8 位无符号整数
-        if value & 0x8000:  # 检查符号位
-            value -= 0x10000  # 如果符号位为 1，表示负数，需要减去 2^8
+        # 16ビット符号なし整数に変換
+        value &= 0xFFFF  # value を 16 ビット符号なし整数に変換
+        if value & 0x8000:  # 符号ビットをチェック
+            value -= 0x10000  # 符号ビットが 1 の場合、負数を表すため、2^16 を減算する必要があります
         return value
 
     def ConvertToNegative_uint16_t(self, value: int) -> int:
         '''
-        将输入的整数转换为16位无符号整数。
-        输入 value 范围:[0,65535]
-        return 范围: [0, 65535]
+        入力された整数を16ビット符号なし整数に変換します。
+        入力 value 範囲:[0,65535]
+        return 範囲: [0, 65535]
         '''
         '''
         Convert the input integer to a 16-bit unsigned integer.
         input value range:[0,65535]
         return Range: [0, 65535]
         '''
-        # 范围检查
+        # 範囲チェック
         if not (0 <= value <= 65535):
             self.logger.error("Error ConvertToNegative_uint16_t: Input value exceeds the range [0, 65535].")
-        # 转换成 8 位无符号整数
-        value &= 0xFFFF  # 将 value 转换成 8 位无符号整数
+        # 16ビット符号なし整数に変換
+        value &= 0xFFFF  # value を 16 ビット符号なし整数に変換
         return value
 
     def ConvertToNegative_32bit(self, value:int, signed:bool=True):
         '''
-        将输入的整数转换为32位整数。
-        输入 value 范围:[0,4294967295]
-        如果 signed 为 True,则转换为32位有符号整数。
-        如果 signed 为 False,则转换为32位无符号整数。
+        入力された整数を32ビット整数に変換します。
+        入力 value 範囲:[0,4294967295]
+        signed が True の場合、32ビット符号付き整数に変換されます。
+        signed が False の場合、32ビット符号なし整数に変換されます。
         '''
         '''
         Convert the input integer to a 32-bit integer.
@@ -207,59 +207,59 @@ class C_PiperParserBase(ABC):
         If signed is True, it will be converted to a 32-bit signed integer.
         If signed is False, it will be converted to a 32-bit unsigned integer.
         '''
-        # 范围检查
+        # 範囲チェック
         if not (0 <= value <= 4294967295):
             self.logger.error("Error ConvertToNegative_32bit: Input value exceeds the range [0, 4294967295].")
-        # 转换成 32 位无符号整数
-        value &= 0xFFFFFFFF  # 将 value 转换成 32 位无符号整数
+        # 32ビット符号なし整数に変換
+        value &= 0xFFFFFFFF  # value を 32 ビット符号なし整数に変換
         if signed:
-            if value & 0x80000000:  # 检查符号位
-                value -= 0x100000000  # 如果符号位为 1，表示负数，需要减去 2^32
+            if value & 0x80000000:  # 符号ビットをチェック
+                value -= 0x100000000  # 符号ビットが 1 の場合、負数を表すため、2^32 を減算する必要があります
         return value
     
     def ConvertToNegative_int32_t(self, value: int) -> int:
         '''
-        将输入的整数转换为32位有符号整数。
-        输入 value 范围:[0,4294967295]
-        return范围: [-2147483648, 2147483647]
+        入力された整数を32ビット符号付き整数に変換します。
+        入力 value 範囲:[0,4294967295]
+        return範囲: [-2147483648, 2147483647]
         '''
         '''
         Convert the input integer to a 32-bit signed integer.
         input value range:[0,4294967295]
         return Range: [-2147483648, 2147483647].
         '''
-        # 范围检查
+        # 範囲チェック
         if not (0 <= value <= 4294967295):
             self.logger.error("Error ConvertToNegative_int32_t: Input value exceeds the range [0, 4294967295].")
-        # 转换成 8 位无符号整数
-        value &= 0xFFFFFFFF  # 将 value 转换成 8 位无符号整数
-        if value & 0x80000000:  # 检查符号位
-            value -= 0x100000000  # 如果符号位为 1，表示负数，需要减去 2^8
+        # 32ビット符号なし整数に変換
+        value &= 0xFFFFFFFF  # value を 32 ビット符号なし整数に変換
+        if value & 0x80000000:  # 符号ビットをチェック
+            value -= 0x100000000  # 符号ビットが 1 の場合、負数を表すため、2^32 を減算する必要があります
         return value
 
     def ConvertToNegative_uint32_t(self, value: int) -> int:
         '''
-        将输入的整数转换为32位无符号整数。
-        输入 value 范围:[0,4294967295]
-        return范围: [0, 4294967295]
+        入力された整数を32ビット符号なし整数に変換します。
+        入力 value 範囲:[0,4294967295]
+        return範囲: [0, 4294967295]
         '''
         '''
         Convert the input integer to a 32-bit unsigned integer.
         input value range:[0,4294967295]
         return Range: [0, 4294967295].
         '''
-        # 范围检查
+        # 範囲チェック
         if not (0 <= value <= 4294967295):
             self.logger.error("Error ConvertToNegative_uint32_t: Input value exceeds the range [0, 4294967295].")
-        # 转换成 8 位无符号整数
-        value &= 0xFFFFFFFF  # 将 value 转换成 8 位无符号整数
+        # 32ビット符号なし整数に変換
+        value &= 0xFFFFFFFF  # value を 32 ビット符号なし整数に変換
         return value
 
     def ConvertToList_8bit(self, value: int, signed: bool = True):
         '''
-        将输入的整数转换为8位整数列表。
-        根据signed参数判断是否将其视为带符号整数。
-        超出范围时给出提示。
+        入力された整数を8ビット整数リストに変換します。
+        signedパラメータに基づいて、符号付き整数として扱うかどうかを判断します。
+        範囲外の場合は警告を表示します。
         '''
         '''
         Convert the input integer into an 8-bit integer list.
@@ -278,24 +278,24 @@ class C_PiperParserBase(ABC):
     
     def ConvertToList_int8_t(self, value: int):
         if not -128 <= value <= 127:
-            raise OverflowError(f"输入的值 {value} 超出了8位有符号整数的范围 [-128, 127].")
+            raise OverflowError(f"入力値 {value} は8ビット符号付き整数の範囲 [-128, 127] を超えています。")
         if value < 0:
-            value = (value + 0x100) & 0xFF  # 转换为8位表示
+            value = (value + 0x100) & 0xFF  # 8ビット表現に変換
         else:
             value &= 0xFF
         return [value]
     
     def ConvertToList_uint8_t(self, value: int):
         if not 0 <= value <= 255:
-            raise OverflowError(f"输入的值 {value} 超出了8位无符号整数的范围 [0, 255].")
+            raise OverflowError(f"入力値 {value} は8ビット符号なし整数の範囲 [0, 255] を超えています。")
         value &= 0xFF
         return [value]
 
     def ConvertToList_16bit(self, value: int, signed: bool = True):
         '''
-        将输入的整数转换为16位整数列表。
-        根据signed参数判断是否将其视为带符号整数。
-        超出范围时给出提示。
+        入力された整数を16ビット整数リストに変換します。
+        signedパラメータに基づいて、符号付き整数として扱うかどうかを判断します。
+        範囲外の場合は警告を表示します。
         '''
         '''
         Convert the input integer into a 16-bit integer list.
@@ -314,30 +314,30 @@ class C_PiperParserBase(ABC):
 
     def ConvertToList_int16_t(self, value: int):
         if not -32768 <= value <= 32767:
-            raise OverflowError(f"输入的值 {value} 超出了16位有符号整数的范围 [-32768, 32767].")
+            raise OverflowError(f"入力値 {value} は16ビット符号付き整数の範囲 [-32768, 32767] を超えています。")
         if value < 0:
-            value = (value + 0x10000) & 0xFFFF  # 转换为16位表示
+            value = (value + 0x10000) & 0xFFFF  # 16ビット表現に変換
         else:
             value &= 0xFFFF
-        # 将结果拆分为两个uint8值
+        # 結果を2つのuint8値に分割
         high_byte = (value >> 8) & 0xFF
         low_byte = value & 0xFF
         return [high_byte, low_byte]
     
     def ConvertToList_uint16_t(self, value: int):
         if not 0 <= value <= 65535:
-            raise OverflowError(f"输入的值 {value} 超出了16位无符号整数的范围 [0, 65535].")
+            raise OverflowError(f"入力値 {value} は16ビット符号なし整数の範囲 [0, 65535] を超えています。")
         value &= 0xFFFF
-        # 将结果拆分为两个uint8值
+        # 結果を2つのuint8値に分割
         high_byte = (value >> 8) & 0xFF
         low_byte = value & 0xFF
         return [high_byte, low_byte]
 
     def ConvertToList_32bit(self, value: int, signed: bool = True):
         '''
-        将输入的整数转换为32位整数列表。
-        根据signed参数判断是否将其视为带符号整数。
-        超出范围时给出提示。
+        入力された整数を32ビット整数リストに変換します。
+        signedパラメータに基づいて、符号付き整数として扱うかどうかを判断します。
+        範囲外の場合は警告を表示します。
         '''
         '''
         Convert the input integer into a 32-bit integer list.
@@ -356,12 +356,12 @@ class C_PiperParserBase(ABC):
 
     def ConvertToList_int32_t(self, value: int):
         if not -2147483648 <= value <= 2147483647:
-            raise OverflowError(f"输入的值 {value} 超出了32位有符号整数的范围 [-2147483648, 2147483647].")
+            raise OverflowError(f"入力値 {value} は32ビット符号付き整数の範囲 [-2147483648, 2147483647] を超えています。")
         if value < 0:
-            value = (value + 0x100000000) & 0xFFFFFFFF  # 转换为32位表示
+            value = (value + 0x100000000) & 0xFFFFFFFF  # 32ビット表現に変換
         else:
             value &= 0xFFFFFFFF
-        # 将结果拆分为四个uint8值
+        # 結果を4つのuint8値に分割
         byte_3 = (value >> 24) & 0xFF
         byte_2 = (value >> 16) & 0xFF
         byte_1 = (value >> 8) & 0xFF
@@ -370,9 +370,9 @@ class C_PiperParserBase(ABC):
     
     def ConvertToList_uint32_t(self, value: int):
         if not 0 <= value <= 4294967295:
-            raise OverflowError(f"输入的值 {value} 超出了32位无符号整数的范围 [0, 4294967295].")
+            raise OverflowError(f"入力値 {value} は32ビット符号なし整数の範囲 [0, 4294967295] を超えています。")
         value &= 0xFFFFFFFF
-        # 将结果拆分为四个uint8值
+        # 結果を4つのuint8値に分割
         byte_3 = (value >> 24) & 0xFF
         byte_2 = (value >> 16) & 0xFF
         byte_1 = (value >> 8) & 0xFF
@@ -381,8 +381,8 @@ class C_PiperParserBase(ABC):
 
     def FloatToUint(self,x_float:float, x_min:float, x_max:float, bits:int):
         '''
-        浮点数转换为无符号整数
-        用在mit模式透传控制单独关节电机驱动器模式
+        浮動小数点数を符号なし整数に変換
+        MITモードのパススルー制御で個々の関節モータードライバモードで使用
         '''
         '''
         Convert floating point number to unsigned integer
@@ -394,7 +394,7 @@ class C_PiperParserBase(ABC):
     
     def ConvertBytesToInt(self, bytes:bytearray, first_index:int, second_index:int, byteorder:Literal["little", "big"]='big'):
         '''
-        将字节串转换为int类型,默认为大端对齐
+        バイト列をint型に変換、デフォルトはビッグエンディアン
         '''
         '''
         Convert a byte string to an int type, with big-endian byte order by default.

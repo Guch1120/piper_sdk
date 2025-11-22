@@ -7,7 +7,7 @@ class ArmMsgType(Enum):
     '''
     msg_v2
     
-    机械臂消息类型,枚举类型
+    ロボットアームメッセージタイプ、列挙型
     '''
     '''
     msg_v2
@@ -15,15 +15,15 @@ class ArmMsgType(Enum):
     Robotic Arm Message Types (Enumeration)
     '''
     # feedback
-    PiperMsgUnkonwn = 0x00             #未知类型
-    PiperMsgStatusFeedback = auto()    #机械臂状态消息反馈
-    PiperMsgEndPoseFeedback_1 = auto() #机械臂末端位姿反馈1
-    PiperMsgEndPoseFeedback_2 = auto() #机械臂末端位姿反馈2
-    PiperMsgEndPoseFeedback_3 = auto() #机械臂末端位姿反馈3
-    PiperMsgJointFeedBack_12 = auto()  #机械臂臂部关节反馈12
-    PiperMsgJointFeedBack_34 = auto()  #机械臂臂部关节反馈34
-    PiperMsgJointFeedBack_56 = auto()  #机械臂臂部关节反馈56
-    PiperMsgGripperFeedBack = auto()  #夹爪反馈指令
+    PiperMsgUnkonwn = 0x00             #未知のタイプ
+    PiperMsgStatusFeedback = auto()    #ロボットアーム状態メッセージフィードバック
+    PiperMsgEndPoseFeedback_1 = auto() #ロボットアーム先端姿勢フィードバック1
+    PiperMsgEndPoseFeedback_2 = auto() #ロボットアーム先端姿勢フィードバック2
+    PiperMsgEndPoseFeedback_3 = auto() #ロボットアーム先端姿勢フィードバック3
+    PiperMsgJointFeedBack_12 = auto()  #ロボットアーム関節フィードバック12
+    PiperMsgJointFeedBack_34 = auto()  #ロボットアーム関節フィードバック34
+    PiperMsgJointFeedBack_56 = auto()  #ロボットアーム関節フィードバック56
+    PiperMsgGripperFeedBack = auto()  #グリッパーフィードバックコマンド
     PiperMsgHighSpdFeed_1 = auto()
     PiperMsgHighSpdFeed_2 = auto()
     PiperMsgHighSpdFeed_3 = auto()
@@ -53,7 +53,7 @@ class ArmMsgType(Enum):
     PiperMsgJointCtrl_56 = auto()
     PiperMsgCircularPatternCoordNumUpdateCtrl=auto()
     PiperMsgGripperCtrl = auto()
-    #----------------------------------基于V1.5-2版本后---------------------------------------------#
+    #----------------------------------V1.5-2バージョン以降---------------------------------------------#
     PiperMsgJointMitCtrl_1 = auto()
     PiperMsgJointMitCtrl_2 = auto()
     PiperMsgJointMitCtrl_3 = auto()
@@ -66,13 +66,13 @@ class ArmMsgType(Enum):
     # PiperMsgMSFeedbackInstructionOffsetConfig=auto()
     # PiperMsgMSCtrlInstructionOffsetConfig=auto()
     # PiperMsgMSLinkageCtrlOffsetConfig=auto()
-    PiperMsgMotorEnableDisableConfig=auto() # 电机使能/失能设置指令
+    PiperMsgMotorEnableDisableConfig=auto() # モーター有効/無効設定コマンド
     # PiperMsgMotorDisableConfig=auto()
     # PiperMsgSearchMotorAngleConfig=auto()
     PiperMsgSearchMotorMaxAngleSpdAccLimit=auto()
     # PiperMsgSearchMotorMaxAccConfig=auto()
     PiperMsgFeedbackCurrentMotorAngleLimitMaxSpd=auto()
-    PiperMsgMotorAngleLimitMaxSpdSet=auto()#电机角度限制/最大速度设置指令
+    PiperMsgMotorAngleLimitMaxSpdSet=auto()#モーター角度制限/最大速度設定コマンド
     PiperMsgJointConfig=auto()
     PiperMsgInstructionResponseConfig=auto()
     PiperMsgFeedbackRespSetInstruction=auto()
@@ -82,7 +82,7 @@ class ArmMsgType(Enum):
     PiperMsgCrashProtectionRatingConfig=auto()
     PiperMsgCrashProtectionRatingFeedback=auto()
     PiperMsgFeedbackCurrentMotorMaxAccLimit=auto()
-    #----------------------------------基于V1.5-2版本后---------------------------------------------#
+    #----------------------------------V1.5-2バージョン以降---------------------------------------------#
     PiperMsgGripperTeachingPendantParamConfig = auto()
     PiperMsgGripperTeachingPendantParamFeedback = auto()
     #---------------------------------------------------------------------------------------------#

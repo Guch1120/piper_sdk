@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*-coding:utf8-*-
-# 注意demo无法直接运行，需要pip安装sdk后才能运行
-# V2版本sdk
-# 单独设定某个电机的mit控制
+# 注意: デモは直接実行できません。実行するにはまずpipでSDKをインストールする必要があります。
+# V2バージョンSDK
+# 特定のモーターのMIT制御を個別に設定します
 import time
 from piper_sdk import *
 

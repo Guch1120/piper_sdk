@@ -7,39 +7,39 @@ class ArmMsgGripperCtrl:
     '''
     msg_v2_transmit
     
-    夹爪控制指令
+    グリッパー制御コマンド
     
     CAN ID:
         0x159
     
     Args:
-        grippers_angle: 夹爪行程
-        grippers_effort: 夹爪扭矩,范围0-5000,对应0-5N/m
+        grippers_angle: グリッパーストローク
+        grippers_effort: グリッパートルク、範囲0-5000、0-5N/mに対応
         status_code: 
-                0x00失能;
-                0x01使能;
-                0x02失能清除错误;
-                0x03使能清除错误.
-        set_zero: 夹爪零点设置
-                0x00无效值
-                0xAE设置零点
+                0x00無効;
+                0x01有効;
+                0x02無効化してエラークリア;
+                0x03有効化してエラークリア.
+        set_zero: グリッパーゼロ点設定
+                0x00無効値
+                0xAEゼロ点設定
     
-    位描述:
+    ビット記述:
     
-        Byte 0 grippers_angle: int32, 单位 0.001mm, 夹爪行程,以整数表示。
+        Byte 0 grippers_angle: int32, 単位 0.001mm, グリッパーストローク、整数で表示。
         Byte 1
         Byte 2
         Byte 3
-        Byte 4 grippers_effort: uint16, 单位 0.001N/m, 夹爪扭矩,以整数表示。
+        Byte 4 grippers_effort: uint16, 単位 0.001N/m, グリッパートルク、整数で表示。
         Byte 5
-        Byte 6 status_code: uint8, 夹爪状态码, 使能/失能/清除错误;
-                0x00失能;
-                0x01使能;
-                0x02失能清除错误;
-                0x03使能清除错误.
-        Byte 7 set_zero: uint8, 设定当前位置为0点
-                0x00无效值
-                0xAE设置零点
+        Byte 6 status_code: uint8, グリッパーステータスコード, 有効/無効/エラークリア;
+                0x00無効;
+                0x01有効;
+                0x02無効化してエラークリア;
+                0x03有効化してエラークリア.
+        Byte 7 set_zero: uint8, 現在位置を0点に設定
+                0x00無効値
+                0xAEゼロ点設定
     '''
     '''
     msg_v2_transmit

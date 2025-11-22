@@ -8,22 +8,22 @@ class ArmMsgSearchMotorMaxAngleSpdAccLimit:
     '''
     msg_v2_transmit
     
-    查询电机角度/最大速度/最大加速度限制指令
+    モーター角度/最大速度/最大加速度制限クエリコマンド
 
     CAN ID:
         0x472
 
     Args:
-        motor_num: 关节电机序号,1-6
-        search_content: 查询内容,0x01-查询电机角度/最大速度,0x02-查询电机最大加速度限制
+        motor_num: 関節モーター番号,1-6
+        search_content: クエリ内容,0x01-モーター角度/最大速度クエリ,0x02-モーター最大加速度制限クエリ
 
-    位描述:
+    ビット記述:
     
-        :Byte 0 motor_num: uint8, 关节电机序号。
-                值域 1-6,1-6 代表关节驱动器序号
-        :Byte 1 search_content: uint8, 查询内容。
-                0x01 : 查询电机角度/最大速度
-                0x02 : 查询电机最大加速度限制
+        :Byte 0 motor_num: uint8, 関節モーター番号。
+                値域 1-6,1-6 は関節ドライバ番号
+        :Byte 1 search_content: uint8, クエリ内容。
+                0x01 : モーター角度/最大速度クエリ
+                0x02 : モーター最大加速度制限クエリ
     '''
     '''
     msg_v2_transmit

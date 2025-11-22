@@ -41,7 +41,7 @@ class C_PiperInterface():
     '''
     class ArmStatus():
         '''
-        机械臂状态二次封装类,增加时间戳
+        ロボットアームステータスの二次カプセル化クラス、タイムスタンプを追加
         '''
         '''
         Piper Status Secondary Encapsulation Class, Add Timestamp
@@ -57,7 +57,7 @@ class C_PiperInterface():
 
     class ArmEndPose():
         '''
-        机械臂末端姿态二次封装类,增加时间戳
+        ロボットアームエンドポーズの二次カプセル化クラス、タイムスタンプを追加
         '''
         '''
         Secondary Encapsulation Class for Robotic Arm End-Effector Pose, Add Timestamp
@@ -73,7 +73,7 @@ class C_PiperInterface():
     
     class ArmJoint():
         '''
-        机械臂关节角度和夹爪二次封装类,将夹爪和关节角度信息放在一起,增加时间戳
+        ロボットアーム関節角度とグリッパーの二次カプセル化クラス、グリッパーと関節角度情報をまとめ、タイムスタンプを追加
         '''
         '''
         Secondary Encapsulation Class for Robotic Arm Joint Angles and Gripper, 
@@ -90,7 +90,7 @@ class C_PiperInterface():
     
     class ArmGripper():
         '''
-        机械臂关节角度和夹爪二次封装类,将夹爪和关节角度信息放在一起,增加时间戳
+        ロボットアーム関節角度とグリッパーの二次カプセル化クラス、グリッパーと関節角度情報をまとめ、タイムスタンプを追加
         '''
         '''
         Secondary Encapsulation Class for Robotic Arm Joint Angles and Gripper, 
@@ -107,7 +107,7 @@ class C_PiperInterface():
     
     class ArmMotorDriverInfoHighSpd():
         '''
-        机械臂电机驱动高速反馈信息
+        ロボットアームモータードライバ高速フィードバック情報
         '''
         '''
         Robotic Arm Motor Driver High-Speed Feedback Information
@@ -133,7 +133,7 @@ class C_PiperInterface():
     
     class ArmMotorDriverInfoLowSpd():
         '''
-        机械臂电机驱动低速反馈信息
+        ロボットアームモータードライバ低速フィードバック情報
         '''
         '''
         Robotic Arm Motor Driver Low-Speed Feedback Information
@@ -159,7 +159,7 @@ class C_PiperInterface():
     
     class ArmMotorAngleLimitAndMaxVel():
         '''
-        当前电机限制角度/最大速度
+        現在のモーター制限角度/最大速度
         '''
         '''
         Current Motor Limit Angle/Maximum Speed
@@ -173,7 +173,7 @@ class C_PiperInterface():
 
     class CurrentEndVelAndAccParam():
         '''
-        当前末端速度/加速度参数
+        現在の末端速度/加速度パラメータ
         0x477 Byte 0 = 0x01 -> 0x478
         '''
         '''
@@ -189,7 +189,7 @@ class C_PiperInterface():
     
     class CrashProtectionLevelFeedback():
         '''
-        碰撞防护等级设置反馈指令
+        衝突保護レベル設定フィードバックコマンド
         0x477 Byte 0 = 0x02 -> 0x47B
         '''
         '''
@@ -205,7 +205,7 @@ class C_PiperInterface():
     
     class GripperTeachingPendantParamFeedback():
         '''
-        夹爪/示教器参数反馈指令
+        グリッパー/ティーチングペンダントパラメータフィードバックコマンド
         0x477 Byte 0 = 0x04 -> 0x47E
         '''
         '''
@@ -221,7 +221,7 @@ class C_PiperInterface():
     
     class CurrentMotorMaxAccLimit():
         '''
-        反馈当前电机最大加速度限制
+        現在のモーター最大加速度制限をフィードバック
         '''
         '''
         Feedback Current Motor Maximum Acceleration Limit
@@ -235,8 +235,8 @@ class C_PiperInterface():
 
     class ArmJointCtrl():
         '''
-        机械臂关节角度和夹爪二次封装类,将夹爪和关节角度信息放在一起,增加时间戳
-        这个是主臂发送的消息，用来读取发送给从臂的目标值
+        ロボットアーム関節角度とグリッパーの二次カプセル化クラス、グリッパーと関節角度情報をまとめ、タイムスタンプを追加
+        これはマスターアームが送信するメッセージで、スレーブアームに送信された目標値を読み取るために使用されます
         '''
         '''
         Secondary Encapsulation Class for Robotic Arm Joint Angles and Gripper, Combining Gripper and Joint Angle Information, Adding Timestamp
@@ -253,8 +253,8 @@ class C_PiperInterface():
     
     class ArmGripperCtrl():
         '''
-        机械臂关节角度和夹爪二次封装类,将夹爪和关节角度信息放在一起,增加时间戳
-        这个是主臂发送的消息，用来读取发送给从臂的目标值
+        ロボットアーム関節角度とグリッパーの二次カプセル化クラス、グリッパーと関節角度情報をまとめ、タイムスタンプを追加
+        これはマスターアームが送信するメッセージで、スレーブアームに送信された目標値を読み取るために使用されます
         '''
         '''
         Secondary Encapsulation Class for Robotic Arm Joint Angles and Gripper, Combining Gripper and Joint Angle Information, Adding Timestamp
@@ -271,7 +271,7 @@ class C_PiperInterface():
     
     class ArmCtrlCode_151():
         '''
-        机械臂发送控制指令0x151的消息接收,由主臂发送
+        ロボットアーム送信制御コマンド0x151のメッセージ受信、マスターアームにより送信
         '''
         '''
         The control command message 0x151 is sent by the main arm for reception
@@ -287,7 +287,7 @@ class C_PiperInterface():
     
     class ArmModeCtrl():
         '''
-        机械臂发送控制指令0x151的消息接收,由主臂发送
+        ロボットアーム送信制御コマンド0x151のメッセージ受信、マスターアームにより送信
         '''
         '''
         The control command message 0x151 is sent by the main arm for reception
@@ -303,7 +303,7 @@ class C_PiperInterface():
     
     class AllCurrentMotorMaxAccLimit():
         '''
-        全部电机最大加速度限制,带时间戳
+        全モーター最大加速度制限、タイムスタンプ付き
         '''
         '''
         The maximum acceleration limit for all motors, with a timestamp.
@@ -317,7 +317,7 @@ class C_PiperInterface():
     
     class AllCurrentMotorAngleLimitMaxSpd():
         '''
-        所有电机限制角度/最大速度,带时间戳
+        全モーター制限角度/最大速度、タイムスタンプ付き
         '''
         '''
         The angular/maximum speed limits for all motors, with a timestamp.
@@ -331,7 +331,7 @@ class C_PiperInterface():
     
     class ArmRespSetInstruction():
         '''
-        设置指令应答
+        設定コマンド応答
         '''
         '''
         Sets the response for the instruction.
@@ -343,7 +343,7 @@ class C_PiperInterface():
             return (f"time stamp:{self.time_stamp}\n"
                     f"{self.instruction_response}\n")
 
-    _instances = {}  # 存储不同参数的实例
+    _instances = {}  # 異なるパラメータのインスタンスを保存
     _lock = threading.Lock()
 
     def __new__(cls, 
@@ -358,16 +358,16 @@ class C_PiperInterface():
                 log_to_file:bool = False,
                 log_file_path = None):
         """
-        实现单例模式：
-        - 相同 can_name参数，只会创建一个实例
-        - 不同参数，允许创建新的实例
+        シングルトンパターンを実装：
+        - 同じcan_nameパラメータの場合、インスタンスは1つだけ作成されます
+        - 異なるパラメータの場合、新しいインスタンスの作成が許可されます
         """
-        key = (can_name)  # 生成唯一 Key
+        key = (can_name)  # 一意のキーを生成
         with cls._lock:
             if key not in cls._instances:
-                instance = super().__new__(cls)  # 创建新实例
-                instance._initialized = False  # 确保 init 只执行一次
-                cls._instances[key] = instance  # 存入缓存
+                instance = super().__new__(cls)  # 新しいインスタンスを作成
+                instance._initialized = False  # initが一度だけ実行されることを保証
+                cls._instances[key] = instance  # キャッシュに保存
         return cls._instances[key]
 
     def __init__(self,
@@ -382,7 +382,7 @@ class C_PiperInterface():
                 log_to_file:bool = False,
                 log_file_path = None) -> None:
         if getattr(self, "_initialized", False): 
-            return  # 避免重复初始化
+            return  # 重複初期化を回避
         # log
         LogManager.update_logger(global_area=global_area,
                                  local_area="InterfaceV2", 
@@ -433,12 +433,12 @@ class C_PiperInterface():
         # protocol
         self.__parser: Type[C_PiperParserV2] = C_PiperParserV2()
         # thread
-        self.__read_can_stop_event = threading.Event()  # 控制 ReadCan 线程
-        self.__can_monitor_stop_event = threading.Event()  # 控制 CanMonitor 线程
-        self.__lock = threading.Lock()  # 保护线程安全
+        self.__read_can_stop_event = threading.Event()  # ReadCanスレッドを制御
+        self.__can_monitor_stop_event = threading.Event()  # CanMonitorスレッドを制御
+        self.__lock = threading.Lock()  # スレッドセーフを保護
         self.__can_deal_th = None
         self.__can_monitor_th = None
-        self.__connected = False  # 连接状态
+        self.__connected = False  # 接続状態
         # FPS cal
         self.__fps_counter = C_FPSCounter()
         self.__fps_counter.set_cal_fps_time_interval(0.1)
@@ -472,16 +472,16 @@ class C_PiperInterface():
         self.__fps_counter.add_variable("ArmGripperCtrl")
         self.__fps_counter.add_variable("ArmCtrlCode_151")
         self.__fps_counter.add_variable("ArmModeCtrl")
-        # 机械臂反馈消息正解，包含每个关节的正解
+        # ロボットアームフィードバックメッセージ順運動学、各関節の順運動学を含む
         self.__piper_feedback_fk_mtx = threading.Lock()
         self.__link_feedback_fk = [[0.0] * 6 for _ in range(6)]
-        # 机械臂控制消息正解，包含每个关节的正解
+        # ロボットアーム制御メッセージ順運動学、各関節の順運動学を含む
         self.__piper_ctrl_fk_mtx = threading.Lock()
         self.__link_ctrl_fk = [[0.0] * 6 for _ in range(6)]
-        # 固件版本
+        # ファームウェアバージョン
         self.__firmware_data_mtx = threading.Lock()
         self.__firmware_data = bytearray()
-        # 二次封装数据类型
+        # 二次カプセル化データ型
         self.__arm_status_mtx = threading.Lock()
         self.__arm_status = self.ArmStatus()
 
@@ -499,7 +499,7 @@ class C_PiperInterface():
 
         self.__arm_motor_info_low_spd_mtx = threading.Lock()
         self.__arm_motor_info_low_spd = self.ArmMotorDriverInfoLowSpd()
-        # 当前电机限制角度/最大速度
+        # 現在のモーター制限角度/最大速度
         self.__feedback_current_motor_angle_limit_max_vel_mtx = threading.Lock()
         self.__feedback_current_motor_angle_limit_max_vel = self.ArmMotorAngleLimitAndMaxVel()
 
@@ -535,7 +535,7 @@ class C_PiperInterface():
         self.__feedback_instruction_response_mtx = threading.Lock()
         self.__feedback_instruction_response = self.ArmRespSetInstruction()
 
-        self._initialized = True  # 标记已初始化
+        self._initialized = True  # 初期化済みとしてマーク
     
     @classmethod
     def get_instance(cls, can_name="can0", judge_flag=True, can_auto_init=True):
@@ -560,13 +560,13 @@ class C_PiperInterface():
                     expected_bitrate:int=1000000,
                     judge_flag:bool=False):
         '''
-        创建can有关的接口
+        CAN関連のインターフェースを作成
         
         Args:
-            can_name: can的端口名称
-            bustype: can总线类型,默认为'socketcan',如果是串口can模块需要改为'slcan'
-            expected_bitrate: 预期can总线的波特率
-            judge_flag: 是否在实例化该类时进行can端口判断,有些情况需要False 
+            can_name: CANポート名
+            bustype: CANバスタイプ、デフォルトは'socketcan'、シリアルCANモジュールの場合は'slcan'に変更する必要があります
+            expected_bitrate: 予想されるCANバスのボーレート
+            judge_flag: クラスのインスタンス化時にCANポートの判定を行うかどうか、一部の状況ではFalseにする必要があります 
         '''
         '''
         Create can related interfaces
@@ -610,14 +610,14 @@ class C_PiperInterface():
                 # self.__arm_can = None
                 self.logger.error("[ConnectPort] can bus create: %s", e)
             self.logger.info("[ConnectPort] init_status: %s", init_status)
-        # 检查线程是否开启
+        # スレッドが開始されているか確認
         with self.__lock:
             if self.__connected:
                 return
             self.__connected = True
             self.__read_can_stop_event.clear()
-            self.__can_monitor_stop_event.clear()  # 允许线程运行
-        # 读取can数据线程----------------------------------------------------------
+            self.__can_monitor_stop_event.clear()  # スレッドの実行を許可
+        # CANデータ読み取りスレッド----------------------------------------------------------
         def ReadCan():
             self.logger.info("[ReadCan] ReadCan Thread started")
             while not self.__read_can_stop_event.is_set():
@@ -666,7 +666,7 @@ class C_PiperInterface():
                 #        is_up != self.__arm_can.CAN_STATUS.CHECK_CAN_UP):
                 #         print("[ERROR] CanMonitor ", is_exist, is_up)
                 # except Exception as e:
-                #     print(f"[ERROR] CanMonitor() 发生异常: {e}")
+                #     print(f"[ERROR] CanMonitor() で例外が発生: {e}")
                 #     # break
                 self.__can_monitor_stop_event.wait(0.05)
         #--------------------------------------------------------------------------
@@ -684,9 +684,9 @@ class C_PiperInterface():
                 self.PiperInit()
         except Exception as e:
             self.logger.error("[ConnectPort] 'Thread start failed: %s'", e)
-            self.__connected = False  # 回滚状态
+            self.__connected = False  # 状態をロールバック
             self.__read_can_stop_event.set()
-            self.__can_monitor_stop_event.set()  # 确保线程不会意外运行
+            self.__can_monitor_stop_event.set()  # スレッドが予期せず実行されないことを保証
     
     def DisconnectPort(self, thread_timeout=0.1):
         '''
@@ -702,7 +702,7 @@ class C_PiperInterface():
             self.__read_can_stop_event.set()
 
         if hasattr(self, 'can_deal_th') and self.__can_deal_th.is_alive():
-            self.__can_deal_th.join(timeout=thread_timeout)  # 加入超时，避免无限阻塞
+            self.__can_deal_th.join(timeout=thread_timeout)  # タイムアウトを追加し、無限ブロックを回避
             if self.__can_deal_th.is_alive():
                 self.logger.warning("[DisconnectPort] The [ReadCan] thread failed to exit within the timeout period")
 
@@ -712,16 +712,16 @@ class C_PiperInterface():
         #         self.logger.warning("The CanMonitor thread failed to exit within the timeout period")
 
         try:
-            self.__arm_can.Close()  # 关闭 CAN 端口
+            self.__arm_can.Close()  # CANポートを閉じる
             self.logger.info("[DisconnectPort] CAN port is closed")
         except Exception as e:
             self.logger.error("[DisconnectPort] 'An exception occurred while closing the CAN port: %s'", e)
     
     def PiperInit(self):
         '''
-        发送查询关节电机最大角度速度指令
-        发送查询关节电机最大加速度限制指令
-        发送查询机械臂固件指令
+        関節モーター最大角度速度クエリコマンドを送信
+        関節モーター最大加速度制限クエリコマンドを送信
+        ロボットアームファームウェアクエリコマンドを送信
         '''
         self.SearchAllMotorMaxAngleSpd()
         self.SearchAllMotorMaxAccLimit()
@@ -788,10 +788,10 @@ class C_PiperInterface():
         return self.__abnormal_data_filter
 
     def ParseCANFrame(self, rx_message: Optional[can.Message]):
-        '''can协议解析函数
+        '''CANプロトコル解析関数
 
         Args:
-            rx_message (Optional[can.Message]): can接收的原始数据
+            rx_message (Optional[can.Message]): CANが受信した生データ
         '''
         '''CAN protocol parsing function.
 
@@ -816,7 +816,7 @@ class C_PiperInterface():
             self.__UpdateCurrentMotorMaxAccLimit(msg)
             self.__UpdateAllCurrentMotorAngleLimitMaxVel(msg)
             self.__UpdateAllCurrentMotorMaxAccLimit(msg)
-            # 更新主臂发送消息
+            # マスターアーム送信メッセージを更新
             self.__UpdateArmJointCtrl(msg)
             self.__UpdateArmGripperCtrl(msg)
             self.__UpdateArmCtrlCode151(msg)
@@ -828,16 +828,16 @@ class C_PiperInterface():
                 self.__UpdatePiperCtrlFK()
     
     # def JudgeExsitedArm(self, can_id:int):
-    #     '''判断当前can socket是否有指定的机械臂设备,通过can id筛选
+    #     '''現在のCANソケットに指定されたロボットアームデバイスが存在するかを判定、CAN IDでフィルタ
     #     Args:
-    #         can_id (int): 输入can 🆔
+    #         can_id (int): 入力CAN ID
     #     '''
     #     '''Checks if the current CAN socket contains the specified robotic arm device by filtering through the CAN ID.
     #     Args:
     #         can_id (int): The input CAN ID
     #     '''
     #     pass
-    # 获取反馈值------------------------------------------------------------------------------------------------------
+    # フィードバック値を取得------------------------------------------------------------------------------------------------------
     def __GetCurrentTime(self):
         return time.time_ns() / 1e9
     
@@ -1009,7 +1009,7 @@ class C_PiperInterface():
             return self.__arm_joint_msgs
     
     def GetFK(self, mode:Literal["feedback", "control"]="feedback"):
-        '''获取机械臂每个关节的正向运动学解。XYZ 的单位为毫米 (mm),RX、RY、RZ 的单位为度
+        '''ロボットアーム各関節の順運動学解を取得。XYZの単位はミリメートル (mm)、RX、RY、RZの単位は度
         返回一个包含 6 个浮点数的列表，表示 1-6 号关节相对于 base_link 的位姿
 
         Args:
@@ -1201,7 +1201,7 @@ class C_PiperInterface():
         return enable_list
     
     def GetCurrentMotorAngleLimitMaxVel(self):
-        '''获取电机角度限制/最大速度指令
+        '''モーター角度制限/最大速度命令を取得
         
         包括最大角度限制,最小角度限制,最大关节速度
         
@@ -1244,7 +1244,7 @@ class C_PiperInterface():
             return self.__feedback_current_motor_angle_limit_max_vel
     
     def GetCurrentEndVelAndAccParam(self):
-        '''获取末端速度/加速度参数
+        '''末端速度/加速度パラメータを取得
         
         包括末端线速度,末端角速度,末端线加速度,末端角加速度
         
@@ -1288,7 +1288,7 @@ class C_PiperInterface():
             return self.__feedback_current_end_vel_acc_param
     
     def GetCrashProtectionLevelFeedback(self):
-        '''获取碰撞防护等级反馈
+        '''衝突保護レベルフィードバックを取得
         
         获取1-6关节碰撞等级,数值0-8,0代表不检测碰撞,1-8检测等级逐级递增(代表检测阈值逐级增加),
         
@@ -1332,7 +1332,7 @@ class C_PiperInterface():
             return self.__feedback_crash_protection_level
     
     def GetGripperTeachingPendantParamFeedback(self):
-        '''夹爪/示教器参数反馈指令
+        '''グリッパー/ティーチングペンダントパラメータフィードバック命令
         
         包括示教器行程系数反馈、夹爪/示教器最大控制行程限制值反馈,
         
@@ -1373,7 +1373,7 @@ class C_PiperInterface():
             return self.__feedback_gripper_teaching_pendant_param
 
     def GetCurrentMotorMaxAccLimit(self):
-        '''获取当前电机最大加速度限制
+        '''現在のモーター最大加速度制限を取得
         
         当前电机序号,当前电机的最大关节加速度
 
@@ -1533,7 +1533,7 @@ class C_PiperInterface():
 
     
     def GetAllMotorMaxAccLimit(self):
-        '''获取所有电机的最大加速度限制,(m1-m6)
+        '''すべてのモーターの最大加速度制限を取得,(m1-m6)
         
         此为应答式消息,意为需要发送请求指令该数据才会有数值
         
@@ -1559,7 +1559,7 @@ class C_PiperInterface():
             return self.__arm_all_motor_max_acc_limit
     
     def GetAllMotorAngleLimitMaxSpd(self):
-        '''获取所有电机的最大限制角度/最小限制角度/最大速度,(m1-m6)
+        '''すべてのモーターの最大制限角度/最小制限角度/最大速度を取得,(m1-m6)
         
         此为应答式消息,意为需要发送请求指令该数据才会有数值
 
@@ -1600,17 +1600,17 @@ class C_PiperInterface():
         Failure: Returns -0x4AF.
         '''
         with self.__firmware_data_mtx:
-            # 查找固件版本信息
+            # ファームウェアバージョン情報を検索
             version_start = self.__firmware_data.find(b'S-V')
             if version_start == -1:
-                return -0x4AF  # 没有找到以 S-V 开头的字符串
-            # 固定长度为 8
+                return -0x4AF  # S-V で始まる文字列が見つからなかった
+            # 固定長は 8
             version_length = 8
-            # 确保不会超出 bytearray 的长度
+            # bytearray の長さを超えないようにする
             version_end = min(version_start + version_length, len(self.__firmware_data))
-            # 提取版本信息，截取固定长度的字节数据
+            # バージョン情報を抽出、固定長のバイトデータを切り取り
             firmware_version = self.__firmware_data[version_start:version_end].decode('utf-8', errors='ignore')
-            return firmware_version  # 返回找到的固件版本字符串
+            return firmware_version  # 見つかったファームウェアバージョン文字列を返す
     
     def GetRespInstruction(self):
         '''
@@ -1646,12 +1646,12 @@ class C_PiperInterface():
         '''
         with self.__is_ok_mtx:
             return self.__is_ok
-    # 发送控制值-------------------------------------------------------------------------------------------------------
+    # 制御値を送信-------------------------------------------------------------------------------------------------------
 
-    # 接收反馈函数------------------------------------------------------------------------------------------------------
+    # フィードバック受信関数------------------------------------------------------------------------------------------------------
     def __CanMonitor(self):
         '''
-        can数据帧率检测
+        CANデータフレームレート検出
         '''
         '''
         CAN data frame rate detection
@@ -1682,7 +1682,7 @@ class C_PiperInterface():
         else: return gripper_val
 
     def __UpdateArmStatus(self, msg:PiperMessage):
-        '''更新机械臂状态
+        '''ロボットアーム状態を更新
 
         Args:
             msg (PiperMessage): 输入为机械臂消息汇总
@@ -1706,7 +1706,7 @@ class C_PiperInterface():
             return self.__arm_status
 
     def __UpdateArmEndPoseState(self, msg:PiperMessage):
-        '''更新末端位姿状态
+        '''末端姿勢状態を更新
 
         Args:
             msg (PiperMessage): 输入为机械臂消息汇总
@@ -1750,7 +1750,7 @@ class C_PiperInterface():
             return self.__arm_end_pose
 
     def __UpdateArmJointState(self, msg:PiperMessage):
-        '''更新关节状态
+        '''関節状態を更新
 
         Args:
             msg (PiperMessage): 输入为机械臂消息汇总
@@ -1795,7 +1795,7 @@ class C_PiperInterface():
             return self.__arm_joint_msgs
 
     def __UpdateArmGripperState(self, msg:PiperMessage):
-        '''更新夹爪状态
+        '''グリッパー状態を更新
 
         Args:
             msg (PiperMessage): 输入为机械臂消息汇总
@@ -1820,7 +1820,7 @@ class C_PiperInterface():
             return self.__arm_gripper_msgs
     
     def __UpdateDriverInfoHighSpdFeedback(self, msg:PiperMessage):
-        '''更新驱动器信息反馈, 高速
+        '''ドライバー情報フィードバックを更新, 高速
 
         Args:
             msg (PiperMessage): 输入为机械臂消息汇总
@@ -1882,7 +1882,7 @@ class C_PiperInterface():
             return self.__arm_motor_info_high_spd
     
     def __UpdateDriverInfoLowSpdFeedback(self, msg:PiperMessage):
-        '''更新驱动器信息反馈, 低速
+        '''ドライバー情報フィードバックを更新, 低速
 
         Args:
             msg (PiperMessage): 输入为机械臂消息汇总
@@ -2228,7 +2228,7 @@ class C_PiperInterface():
             return self.__feedback_gripper_teaching_pendant_param
     
     def __UpdateArmJointCtrl(self, msg:PiperMessage):
-        '''更新关节和夹爪状态,为主臂发送的消息
+        '''関節とグリッパー状態を更新,マスターアームが送信するメッセージ
 
         Args:
             msg (PiperMessage): 输入为机械臂消息汇总
@@ -2257,7 +2257,7 @@ class C_PiperInterface():
             return self.__arm_joint_ctrl_msgs
     
     def __UpdateArmGripperCtrl(self, msg:PiperMessage):
-        '''更新夹爪状态,为主臂发送的消息
+        '''グリッパー状態を更新,マスターアームが送信するメッセージ
 
         Args:
             msg (PiperMessage): 输入为机械臂消息汇总
@@ -2389,7 +2389,7 @@ class C_PiperInterface():
                 self.__feedback_instruction_response.instruction_response.is_set_zero_successfully = \
                     msg.arm_feedback_resp_set_instruction.is_set_zero_successfully
             return self.__feedback_instruction_response
-    # 控制发送函数------------------------------------------------------------------------------------------------------
+    # 制御送信関数------------------------------------------------------------------------------------------------------
     def MotionCtrl_1(self, 
                     emergency_stop: Literal[0x00, 0x01, 0x02] = 0, 
                     track_ctrl: Literal[0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08] = 0, 
@@ -2636,7 +2636,7 @@ class C_PiperInterface():
         self.MotionCtrl_2(ctrl_mode, move_mode, move_spd_rate_ctrl, is_mit_mode)
 
     def __ValidateEndPoseValue(self, endpose_num:str, endpose_value):
-        # 类型判断
+        # タイプ判定
         if not isinstance(endpose_value, int):
             self.logger.error(f"Error: EndPose_{endpose_num} value {endpose_value} is not an integer.")
             return False
@@ -3126,7 +3126,7 @@ class C_PiperInterface():
             self.logger.error("SearchMotorMaxAngleSpdAccLimit send failed: SendCanMessage(%s)", feedback)
 
     def SearchAllMotorMaxAngleSpd(self):
-        '''查询全部电机的电机最大角度/最小角度/最大速度指令
+        '''全モーターの最大角度/最小角度/最大速度命令を照会
 
         CAN ID:
             0x472
@@ -3144,7 +3144,7 @@ class C_PiperInterface():
         self.SearchMotorMaxAngleSpdAccLimit(6, 0x01)
     
     def SearchAllMotorMaxAccLimit(self):
-        '''查询全部电机的最大加速度限制指令
+        '''全モーターの最大加速度制限命令を照会
 
         CAN ID:
             0x472
@@ -3690,21 +3690,21 @@ class C_PiperInterface():
         tx_can = Message()
         tx_can.arbitration_id = 0x191
         if mode == 0:
-            # 恢复主从臂模式
+            # マスタースレーブアームモードを復元
             tx_can.data = [0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
         elif mode == 1:
-            # 主臂回零
+            # マスターアームをゼロ点に戻す
             tx_can.data = [0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00]
         elif mode == 2:
-            # 主从臂一起回零
+            # マスタースレーブアームを一緒にゼロ点に戻す
             tx_can.data = [0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00]
         self.__arm_can.SendCanMessage(tx_can.arbitration_id, tx_can.data)
     
     def ClearRespSetInstruction(self):
         '''
-        清除SDK保存的设置指令应答信息
+        SDKが保存している設定命令応答情報をクリア
 
-        将指令应答反馈中的
+        命令応答フィードバック中の
         time_stamp = 0;
         instruction_response.instruction_index = -1;
         instruction_response.is_set_zero_successfully = -1

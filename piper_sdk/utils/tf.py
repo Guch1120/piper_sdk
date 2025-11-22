@@ -4,15 +4,15 @@ from typing_extensions import (
     Literal,
 )
 
-# 定义欧拉角顺序编码表
+# オイラー角順序エンコード表を定義
 _AXES2TUPLE = {
     'sxyz': (0, 0, 0, 0),
     'rzyx': (0, 0, 0, 1),
 }
 axes = 'sxyz'
-# 用于轴索引计算
+# 軸インデックス計算用
 _NEXT_AXIS = [1, 2, 0, 1]
-# 设置浮点比较误差阈值
+# 浮動小数点比較誤差しきい値を設定
 _EPS = 1e-10
 
 def normalize_quat(qx, qy, qz, qw):
@@ -22,17 +22,17 @@ def normalize_quat(qx, qy, qz, qw):
 def quat_convert_euler(qx: float, qy: float, qz: float, qw: float) -> Tuple[float, float, float]:
                     #    axes: Literal['sxyz', 'rzyx'] = 'sxyz') -> Tuple[float, float, float]:
     """
-    将四元数 [x, y, z, w] 转换为欧拉角 (roll, pitch, yaw)。
+    四元数 [x, y, z, w] をオイラー角 (roll, pitch, yaw) に変換。
 
-    参数:
-        x, y, z, w - 四元数各分量
-        axes - 欧拉角轴顺序，支持 'sxyz' 或 'rzyx'
+    パラメータ:
+        x, y, z, w - 四元数各成分
+        axes - オイラー角の軸順序、'sxyz' または 'rzyx' をサポート
 
-    返回:
-        tuple(float, float, float): 欧拉角 (roll, pitch, yaw)，单位为弧度
+    戻り値:
+        tuple(float, float, float): オイラー角 (roll, pitch, yaw)、単位はラジアン
     """
     
-    # 轴顺序设置
+    # 軸順序設定
     try:
         firstaxis, parity, repetition, frame = _AXES2TUPLE[axes.lower()]
     except (KeyError, AttributeError):
@@ -44,7 +44,7 @@ def quat_convert_euler(qx: float, qy: float, qz: float, qw: float) -> Tuple[floa
     j = _NEXT_AXIS[i + parity]
     k = _NEXT_AXIS[i - parity + 1]
     qx, qy, qz, qw = normalize_quat(qx, qy, qz, qw)
-    # 矩阵 M[i][j] 表达方式：预先展开 3x3 旋转矩阵
+    # 行列 M[i][j] 表現式：事前に3x3回転行列を展開
     M = [[0.0] * 3 for _ in range(3)]
     M[0][0] = 1 - 2*(qy**2 + qz**2)
     M[0][1] =     2*(qx*qy - qz*qw)
@@ -56,7 +56,7 @@ def quat_convert_euler(qx: float, qy: float, qz: float, qw: float) -> Tuple[floa
     M[2][1] =     2*(qy*qz + qx*qw)
     M[2][2] = 1 - 2*(qx**2 + qy**2)
 
-    # 计算欧拉角
+    # オイラー角を計算
     if repetition:
         sy = math.sqrt(M[i][j] ** 2 + M[i][k] ** 2)
         if sy > _EPS:
@@ -78,7 +78,7 @@ def quat_convert_euler(qx: float, qy: float, qz: float, qw: float) -> Tuple[floa
             ay = math.atan2(-M[k][i], cy)
             az = 0.0
 
-    # 调整角度方向
+    # 角度方向を調整
     if parity:
         ax, ay, az = -ax, -ay, -az
     if frame:
@@ -88,14 +88,14 @@ def quat_convert_euler(qx: float, qy: float, qz: float, qw: float) -> Tuple[floa
 
 def euler_convert_quat(roll:float, pitch:float, yaw:float)->Tuple[float, float, float, float]:
     """
-    将欧拉角（roll, pitch, yaw）转换为四元数。
+    オイラー角（roll, pitch, yaw）を四元数に変換。
 
-    参数:
-        roll  - 绕X轴旋转角（单位：弧度）
-        pitch - 绕Y轴旋转角（单位：弧度）
-        yaw   - 绕Z轴旋转角（单位：弧度）
+    パラメータ:
+        roll  - X軸周りの回転角（単位：ラジアン）
+        pitch - Y軸周りの回転角（単位：ラジアン）
+        yaw   - Z軸周りの回転角（単位：ラジアン）
 
-    返回:
+    戻り値:
         list: 四元数 [x, y, z, w]
     """
     
@@ -110,18 +110,18 @@ def euler_convert_quat(roll:float, pitch:float, yaw:float)->Tuple[float, float, 
     j = _NEXT_AXIS[i + parity]
     k = _NEXT_AXIS[i - parity + 1]
 
-    # 坐标系调整
+    # 座標系調整
     if frame:
         roll, yaw = yaw, roll
     if parity:
         pitch = -pitch
 
-    # 角度减半
+    # 角度を半分に
     roll *= 0.5
     pitch *= 0.5
     yaw *= 0.5
 
-    # 三角函数
+    # 三角関数
     c_roll = math.cos(roll)
     s_roll = math.sin(roll)
     c_pitch = math.cos(pitch)
@@ -134,7 +134,7 @@ def euler_convert_quat(roll:float, pitch:float, yaw:float)->Tuple[float, float, 
     sc = s_roll * c_yaw
     ss = s_roll * s_yaw
 
-    # 初始化四元数 [x, y, z, w]
+    # 四元数 [x, y, z, w] を初期化
     q = [0.0, 0.0, 0.0, 0.0]
 
     if repetition:

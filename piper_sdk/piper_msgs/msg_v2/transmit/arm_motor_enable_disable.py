@@ -8,22 +8,22 @@ class ArmMsgMotorEnableDisableConfig:
     '''
     msg_v2_transmit
     
-    电机使能/失能设置指令
+    モーター有効/無効設定コマンド
     
     CAN ID:
         0x471
     
     Args:
-        motor_num: 电机序号[1,7],7代表所有电机
-        enable_flag: 使能标志位,0x01-失能;0x02-使能
+        motor_num: モーター番号[1,7]、7は全モーターを表す
+        enable_flag: 有効フラグ、0x01-無効;0x02-有効
     
-    位描述:
+    ビット記述:
     
-        Byte 0: uint8, 关节电机序号。
-                值域 1-7:1-6 代表关节驱动器序号,7代表夹爪电机,FF代表全部关节电机(包含夹爪)
-        Byte 1: uint8, 使能/失能。
-                0x01 : 失能
-                0x02 : 使能
+        Byte 0: uint8, 関節モーター番号。
+                値域 1-7:1-6 は関節ドライバ番号、7はグリッパーモーター、FFは全関節モーター（グリッパーを含む）
+        Byte 1: uint8, 有効/無効。
+                0x01 : 無効
+                0x02 : 有効
     '''
     '''
     msg_v2_transmit

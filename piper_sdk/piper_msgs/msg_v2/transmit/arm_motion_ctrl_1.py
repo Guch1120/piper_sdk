@@ -7,42 +7,42 @@ class ArmMsgMotionCtrl_1():
     '''
     msg_v2_transmit
     
-    机械臂运动控制指令1
+    ロボットアーム運動制御コマンド1
     
     CAN ID:
         0x150
     
     Args:
-        emergency_stop: 快速急停
-        track_ctrl: 轨迹指令
-        grag_teach_ctrl: 拖动示教指令
+        emergency_stop: 緊急停止
+        track_ctrl: 軌道コマンド
+        grag_teach_ctrl: ドラッグティーチングコマンド
     
-    位描述:
+    ビット記述:
     
-        Byte 0: 快速急停     uint8    0x00 无效
-                                    0x01 快速急停
-                                    0x02 恢复
-        Byte 1: 轨迹指令     uint8    0x00 关闭
-                                    0x01 暂停当前规划
-                                    0x02 继续当前轨迹
-                                    0x03 清除当前轨迹
-                                    0x04 清除所有轨迹
-                                    0x05 获取当前规划轨迹
-                                    0x06 终止执行
-                                    0x07 轨迹传输
-                                    0x08 轨迹传输结束
-        Byte 2: 拖动示教指令 uint8     0x00 关闭
-                                    0x01 开始示教记录（进入拖动示教模式）
-                                    0x02 结束示教记录（退出拖动示教模式）
-                                    0x03 执行示教轨迹（拖动示教轨迹复现）
-                                    0x04 暂停执行
-                                    0x05 继续执行（轨迹复现继续）
-                                    0x06 终止执行
-                                    0x07 运动到轨迹起点
-        Byte 3: 轨迹索引    uint8     标记刚才传输的轨迹点为第N个轨迹点
+        Byte 0: 緊急停止     uint8    0x00 無効
+                                    0x01 緊急停止
+                                    0x02 復帰
+        Byte 1: 軌道コマンド     uint8    0x00 オフ
+                                    0x01 現在の計画を一時停止
+                                    0x02 現在の軌道を継続
+                                    0x03 現在の軌道をクリア
+                                    0x04 全ての軌道をクリア
+                                    0x05 現在の計画軌道を取得
+                                    0x06 実行終了
+                                    0x07 軌道転送
+                                    0x08 軌道転送終了
+        Byte 2: ドラッグティーチングコマンド uint8     0x00 オフ
+                                    0x01 ティーチング記録開始（ドラッグティーチングモードに入る）
+                                    0x02 ティーチング記録終了（ドラッグティーチングモードを終了）
+                                    0x03 ティーチング軌道実行（ドラッグティーチング軌道再生）
+                                    0x04 実行一時停止
+                                    0x05 実行再開（軌道再生再開）
+                                    0x06 実行終了
+                                    0x07 軌道始点へ移動
+        Byte 3: 軌道インデックス    uint8     直前に転送された軌道点をN番目の軌道点としてマーク
                                     N=0~255
-                                    主控收到后会应答0x476 byte0 = 0x50 ;byte 2=N(详见0x476 )未收到应答需要重传
-        Byte 4: NameIndex_H uint16   当前轨迹包名称索引,由NameIndex和crc组成(应答0x477 byte0=03)
+                                    メインコントローラ受信後、0x476 byte0 = 0x50 ;byte 2=N（詳細は0x476を参照）で応答、応答がない場合は再送が必要
+        Byte 4: NameIndex_H uint16   現在の軌道パケット名インデックス、NameIndexとcrcで構成（応答0x477 byte0=03）
         Byte 5: NameIndex_L
         Byte 6: crc16_H     uint16  
         Byte 7: crc16_L
@@ -101,15 +101,15 @@ class ArmMsgMotionCtrl_1():
                  emergency_stop: Literal[0x00, 0x01, 0x02] = 0, 
                  track_ctrl: Literal[0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08] = 0, 
                  grag_teach_ctrl: Literal[0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07] = 0):
-        # 检查 emergency_stop 是否在有效范围内
+        # emergency_stopが有効範囲内かチェック
         if emergency_stop not in [0x00, 0x01, 0x02]:
             raise ValueError(f"'emergency_stop' Value {emergency_stop} out of range [0x00, 0x01, 0x02]")
         
-        # 检查 track_ctrl 是否在有效范围内
+        # track_ctrlが有効範囲内かチェック
         if track_ctrl not in [0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08]:
             raise ValueError(f"'track_ctrl' Value {track_ctrl} out of range [0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08]")
         
-        # 检查 grag_teach_ctrl 是否在有效范围内
+        # grag_teach_ctrlが有効範囲内かチェック
         if grag_teach_ctrl not in [0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]:
             raise ValueError(f"'grag_teach_ctrl' Value {grag_teach_ctrl} out of range [0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]")
         self.emergency_stop = emergency_stop
@@ -123,7 +123,7 @@ class ArmMsgMotionCtrl_1():
             (" grag_teach_ctrl ", self.grag_teach_ctrl)
         ]
 
-        # 生成格式化字符串，保留三位小数
+        # フォーマット文字列を生成、小数点以下3桁を保持
         formatted_ = "\n".join([f"{name}: {value}" for name, value in dict_])
         
         return f"ArmMsgMotionCtrl_1:\n{formatted_}"

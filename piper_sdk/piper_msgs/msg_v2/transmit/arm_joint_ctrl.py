@@ -5,7 +5,7 @@ class ArmMsgJointCtrl():
     '''
     msg_v2_transmit
     
-    机械臂关节控制,单位0.001度
+    ロボットアーム関節制御、単位0.001度
     
     CAN ID:
         0x155,0x156,0x157
@@ -49,7 +49,7 @@ class ArmMsgJointCtrl():
         self.joint_6 = joint_6
 
     def __str__(self):
-        # 将角度乘以0.001，并保留三位小数
+        # 角度に0.001を掛け、小数点以下3桁を保持
         joint_angles = [
             ("Joint_1", self.joint_1 * 0.001),
             ("Joint_2", self.joint_2 * 0.001),
@@ -59,7 +59,7 @@ class ArmMsgJointCtrl():
             ("Joint_6", self.joint_6 * 0.001)
         ]
 
-        # 生成格式化字符串，保留三位小数
+        # フォーマット文字列を生成、小数点以下3桁を保持
         formatted_angles = "\n".join([f"{name}: {angle:.3f}" for name, angle in joint_angles])
         
         return f"ArmMsgJointCtrl:\n{formatted_angles}"

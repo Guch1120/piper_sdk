@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*-coding:utf8-*-
-# 注意demo无法直接运行，需要pip安装sdk后才能运行
-# piper机械臂圆弧模式demo
-# 注意机械臂工作空间内不要有障碍
+# 注意: デモは直接実行できません。実行するにはまずpipでSDKをインストールする必要があります。
+# Piperロボットアーム円弧モードデモ
+# 注意: ロボットアームの作業スペース内に障害物がないようにしてください
 import time
 from piper_sdk import *
 
@@ -12,7 +12,7 @@ if __name__ == "__main__":
     while( not piper.EnablePiper()):
         time.sleep(0.01)
     piper.GripperCtrl(0,1000,0x01, 0)
-    # 切换至MOVEC模式
+    # MOVECモードに切り替え
     piper.MotionCtrl_2(0x01, 0x03, 30, 0x00)
     # X:135.481
     piper.EndPoseCtrl(135481,9349,161129,178756,6035,-178440)

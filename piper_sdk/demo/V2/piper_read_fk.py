@@ -3,15 +3,15 @@
 import time
 from piper_sdk import *
 
-# 测试代码
+# テストコード
 if __name__ == "__main__":
     piper = C_PiperInterface_V2(dh_is_offset=1)
     piper.ConnectPort()
-    # 使用前需要使能
+    # 使用前に有効化する必要があります
     piper.EnableFkCal()
-    # 注意，由于计算在单一线程中十分耗费资源，打开后会导致cpu占用率上升接近一倍
+    # 注意: 計算は単一スレッドで非常にリソースを消費するため、有効にするとCPU使用率がほぼ倍増します
     while True:
-        # 反馈6个浮点数的列表，表示 1-6 号关节的位姿，-1表示joint6的位姿
+        # 1〜6番目の関節のポーズを表す6つの浮動小数点数のリストをフィードバックします。-1はjoint6のポーズを表します
         print(f"feedback:{piper.GetFK('feedback')[-1]}")
         print(f"control:{piper.GetFK('control')}")
         time.sleep(0.01)

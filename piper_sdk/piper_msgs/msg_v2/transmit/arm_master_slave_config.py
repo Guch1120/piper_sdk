@@ -8,35 +8,35 @@ class ArmMsgMasterSlaveModeConfig:
     '''
     msg_v2_transmit
     
-    随动主从模式设置指令
+    追従マスタースレーブモード設定コマンド
     
     CAN ID:
         0x470
     
     Args:
-        linkage_config: 联动设置指令
-        feedback_offset: 反馈指令偏移值
-        ctrl_offset: 控制指令偏移值
-        linkage_offset: 联动模式控制目标地址偏移值
+        linkage_config: 連動設定コマンド
+        feedback_offset: フィードバックコマンドオフセット値
+        ctrl_offset: 制御コマンドオフセット値
+        linkage_offset: 連動モード制御ターゲットアドレスオフセット値
     
-    位描述:
+    ビット記述:
     
-        Byte 0 linkage_config: uint8, 联动设置指令。
-                                0x00 无效
-                                0xFA 设置为示教输入臂
-                                0xFC 设置为运动输出臂
-        Byte 1 feedback_offset: uint8, 反馈指令偏移值。
-                                0x00 : 不偏移/恢复默认
-                                0x10 ：反馈指令基 ID 由 2Ax偏移为 2Bx
-                                0x20 ：反馈指令基 ID 由 2Ax偏移为 2Cx
-        Byte 2 ctrl_offset: uint8, 控制指令偏移值。
-                                0x00 : 不偏移/恢复默认
-                                0x10 ：控制指令基 ID 由 15x偏移为 16x
-                                0x20 ：控制指令基 ID 由 15x偏移为 17x
-        Byte 3 linkage_offset: uint8, 联动模式控制目标地址偏移值。
-                                0x00 : 不偏移/恢复默认
-                                0x10 : 控制目标地址基 ID由 15x 偏移为 16x
-                                0x20 : 控制目标地址基 ID由 15x 偏移为 17x
+        Byte 0 linkage_config: uint8, 連動設定コマンド。
+                                0x00 無効
+                                0xFA ティーチング入力アームに設定
+                                0xFC 運動出力アームに設定
+        Byte 1 feedback_offset: uint8, フィードバックコマンドオフセット値。
+                                0x00 : オフセットなし/デフォルトに戻す
+                                0x10 ：フィードバックコマンドベースIDを2Axから2Bxにオフセット
+                                0x20 ：フィードバックコマンドベースIDを2Axから2Cxにオフセット
+        Byte 2 ctrl_offset: uint8, 制御コマンドオフセット値。
+                                0x00 : オフセットなし/デフォルトに戻す
+                                0x10 ：制御コマンドベースIDを15xから16xにオフセット
+                                0x20 ：制御コマンドベースIDを15xから17xにオフセット
+        Byte 3 linkage_offset: uint8, 連動モード制御ターゲットアドレスオフセット値。
+                                0x00 : オフセットなし/デフォルトに戻す
+                                0x10 : 制御ターゲットアドレスベースIDを15xから16xにオフセット
+                                0x20 : 制御ターゲットアドレスベースIDを15xから17xにオフセット
     '''
     '''
     msg_v2_transmit
